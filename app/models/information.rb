@@ -7,5 +7,5 @@ class Information < ApplicationRecord
     has_many :reviews, as: :reviewable
 
     # validaciones
-    validates :title, :date, info_type:, description: true #las referencias pueden ser vacias
+    validates :title, :date, :info_type, :description, presence: true #las referencias pueden ser vacias
 end
