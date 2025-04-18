@@ -23,6 +23,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :description, "Descripcion" %><br />
+    <%= f.text_area :description, rows: 4 %>
+  </div>
+
+  <div class="field">
     <%= f.label :password %> <i>(dejar en blanco si no quieres cambiarla)</i><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
