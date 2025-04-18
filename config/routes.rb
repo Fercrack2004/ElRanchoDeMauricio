@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   # Rutas para blogs
   resources :blogs, only: [:new, :create, :index, :show]
-  resources :information
+  resources :information_pages
 
   root "render#index"
 end

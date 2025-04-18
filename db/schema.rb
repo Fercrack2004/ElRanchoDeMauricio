@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_18_212608) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_18_230249) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,7 +26,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_18_212608) do
 
   create_table "blogs", force: :cascade do |t|
     t.string "title"
-    t.date "date"
     t.string "public_type"
     t.string "description"
     t.datetime "created_at", null: false
@@ -35,7 +34,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_18_212608) do
 
   create_table "information_pages", force: :cascade do |t|
     t.string "title"
-    t.date "date"
     t.string "info_type"
     t.string "description"
     t.string "references", default: [], array: true
