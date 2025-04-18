@@ -1,7 +1,83 @@
-<main class="container">
-  <div class="row text-center justify-content-center">
-    <div class="col">
-      <h1 class="display-4">Hello World!</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ElRanchoDeMauricio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+  <!-- Barra de navegación -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">ElRanchoDeMauricio</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Blogs</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Mi Perfil</a></li>
+        </ul>
+        <div class="d-flex">
+          <% if user_signed_in? %>
+            <%= link_to "Editar Perfil", edit_user_registration_path, class: "btn btn-outline-light me-2" %>
+            <%= button_to "Cerrar Sesion", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+          <% else %>
+            <%= link_to "Iniciar Sesion", new_user_session_path, class: "btn btn-outline-light me-2" %>
+            <%= link_to "Registrarse", new_user_registration_path, class: "btn btn-warning" %>
+          <% end %>
+        </div>
+      </div>
     </div>
-  </div>
-</main>
+  </nav>
+
+
+  <!-- Banner principal -->
+  <header class="bg-light py-5 text-center">
+    <div class="container">
+      <h1 class="display-4">Bienvenido a ElRanchoDeMauricio 🍝</h1>
+      <p class="lead">Explora recetas, deja reseñas y comparte tus propias creaciones culinarias</p>
+    </div>
+  </header>
+
+
+  <!-- Sección de búsqueda -->
+  <section class="container my-4">
+    <form class="row g-3">
+      <div class="col-md-10">
+        <input type="text" class="form-control" placeholder="Buscar recetas o ingredientes...">
+      </div>
+      <div class="col-md-2 d-grid">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </div>
+    </form>
+  </section>
+
+
+  <!-- Sección de blogs populares -->
+  <section class="container">
+    <h2 class="mb-4">Blogs Populares</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col">
+        <div class="card">
+          <img src="https://source.unsplash.com/300x200/?pasta" class="card-img-top" alt="Pasta">
+          <div class="card-body">
+            <h5 class="card-title">Pasta Casera</h5>
+            <p class="card-text">Descubre cómo hacer la mejor pasta desde cero.</p>
+            <a href="#" class="btn btn-outline-primary">Ver Blog</a>
+          </div>
+        </div>
+      </div>
+      <!-- Puedes duplicar el bloque .col para más blogs -->
+    </div>
+  </section>
+
+
+  <footer class="bg-dark text-white mt-5 p-4 text-center">
+    &copy; 2025 ElRanchoDeMauricio. Todos los derechos reservados.
+  </footer>
+
+
+</body>
+</html>
