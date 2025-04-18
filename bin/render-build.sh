@@ -6,8 +6,8 @@ bundle install
 bundle exec rails assets:precompile
 bundle exec rails assets:clean
 
-bundle exec rails db:drop
-bundle exec rails db:create
+#bundle exec rails db:drop
+#bundle exec rails db:create
 bundle exec rails db:migrate
 
 # If you're using a Free instance type, you need to
