@@ -1,0 +1,2 @@
+class InformationPagesController < ApplicationController
+end
