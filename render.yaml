@@ -9,7 +9,6 @@ services:
     name: wiki_project_group_32
     runtime: ruby
     plan: free
-    startCommand: "bundle exec rails db:migrate && bundle exec rails server"
     buildCommand: "./bin/render-build.sh"
     # preDeployCommand: "bundle exec rails db:migrate" # preDeployCommand only available on paid instance types
     startCommand: "bundle exec rails server"
