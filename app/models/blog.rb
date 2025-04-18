@@ -8,7 +8,7 @@ class Blog < ApplicationRecord
 
     # Validaciones
     validates :title, :date, :public_type, :description, presence: true
-    validates :checkear_editor
+    validate :checkear_editor
 
     def checkear_editor
         if users.none?(&:moderator?) #revisa si ni un user en blog_participation es editor
