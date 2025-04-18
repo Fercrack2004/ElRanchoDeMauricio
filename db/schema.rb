@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_18_210234) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_18_212608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_18_210234) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "information", force: :cascade do |t|
+  create_table "information_pages", force: :cascade do |t|
     t.string "title"
     t.date "date"
     t.string "info_type"
@@ -96,7 +96,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_18_210234) do
 
   add_foreign_key "blog_participations", "blogs"
   add_foreign_key "blog_participations", "users"
-  add_foreign_key "information_participations", "information"
+  add_foreign_key "information_participations", "information_pages"
   add_foreign_key "information_participations", "users"
   add_foreign_key "requests", "users"
   add_foreign_key "reviews", "users"
