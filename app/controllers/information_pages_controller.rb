@@ -19,7 +19,9 @@ class InformationPagesController < ApplicationController
       if @information.save
         # Asociar al usuario actual como autor
         @information.information_participations.create(user: current_user, contribution: :autor)
-        redirect_to @information, notice: "Información creada con éxito"
+        # Crear el chatroom correspondiente
+        @information.create_chat_room(name: "Chat de editores: \"#{@information.title}\"")
+        redirect_to @information, notice: "Página de información creada con éxito"
       else
         render :new, status: :unprocessable_entity
       end
