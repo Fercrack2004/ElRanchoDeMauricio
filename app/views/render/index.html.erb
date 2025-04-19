@@ -19,7 +19,12 @@
     .card {
       border: 2px solid #d9534f;
       border-radius: 12px;
-      height: 100%; /* Asegura cards de igual altura */
+      height: 100%;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
     .card-img-top {
       height: 200px;
@@ -55,7 +60,8 @@
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <a class="navbar-brand" href="/" data-turbo="false">ElRanchoDeMauricio</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
+              aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarContent">
@@ -70,8 +76,8 @@
           <% if user_signed_in? %>
             <%= link_to "Editar Perfil", edit_user_registration_path, class: "btn btn-outline-light me-2", data: { turbo: false } %>
 
-            <!-- Dropdown de Crear -->
-            <div class="dropdown me-2">
+            <!-- Dropdown de Crear con data-turbo="false" -->
+            <div class="dropdown me-2" data-turbo="false">
               <button class="btn btn-success dropdown-toggle"
                       type="button"
                       id="crearDropdown"
@@ -81,13 +87,14 @@
               </button>
               <ul class="dropdown-menu" aria-labelledby="crearDropdown">
                 <li><%= link_to "Blog", new_blog_path, class: "dropdown-item", data: { turbo: false } %></li>
-                <li><%= link_to "Informacion", new_information_path, class: "dropdown-item", data: { turbo: false } %></li>
+                <li><%= link_to "Información", new_information_path, class: "dropdown-item", data: { turbo: false } %></li>
               </ul>
             </div>
 
-            <%= button_to "Cerrar Sesion", destroy_user_session_path, method: :delete, class: "btn btn-warning", data: { turbo: false } %>
+            <%= button_to "Cerrar Sesión", destroy_user_session_path, method: :delete, 
+                          class: "btn btn-warning", data: { turbo: false } %>
           <% else %>
-            <%= link_to "Iniciar Sesion", new_user_session_path, class: "btn btn-outline-light me-2", data: { turbo: false } %>
+            <%= link_to "Iniciar Sesión", new_user_session_path, class: "btn btn-outline-light me-2", data: { turbo: false } %>
             <%= link_to "Registrarse", new_user_registration_path, class: "btn btn-light", data: { turbo: false } %>
           <% end %>
         </div>
@@ -115,27 +122,27 @@
     </form>
   </section>
 
-  <!-- Sección de blogs populares (ACTUALIZADA) -->
+  <!-- Sección de blogs populares -->
   <section class="container">
     <h2 class="mb-4">Blogs Populares</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <% if @blogs.any? %>
         <% @blogs.each do |blog| %>
           <div class="col">
-            <div class="card">
+            <div class="card h-100">
               <img src="https://source.unsplash.com/random/300x200/?food,<%= blog.title.parameterize %>" 
                    class="card-img-top" 
                    alt="<%= blog.title %>">
-              <div class="card-body">
+              <div class="card-body d-flex flex-column">
                 <h5 class="card-title"><%= blog.title %></h5>
-                <p class="card-text"><%= truncate(blog.description, length: 100) %></p>
-
-                <%= link_to "Ver Blog", blog_path(blog), class: "btn btn-outline-primary mb-2", data: { turbo: false } %><br>
-                <%= link_to "Ver Reviews", blog_reviews_path(blog), class: "btn btn-outline-secondary", data: { turbo: false } %>
-                <%= link_to "Dejar Review", new_blog_review_path(blog), class: "btn btn-primary ms-2" %>
-
-                
-                
+                <p class="card-text flex-grow-1"><%= truncate(blog.description, length: 100) %></p>
+                <div class="mt-auto">
+                  <div class="d-grid gap-2">
+                    <%= link_to "Ver Blog", blog_path(blog), class: "btn btn-outline-primary", data: { turbo: false } %>
+                    <%= link_to "Ver Reviews", blog_reviews_path(blog), class: "btn btn-outline-secondary", data: { turbo: false } %>
+                    <%= link_to "Dejar Review", new_blog_review_path(blog), class: "btn btn-primary", data: { turbo: false } %>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -159,14 +166,41 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   
+  <!-- Solución Turbo completa -->
   <script>
-    // Inicialización de componentes Bootstrap
-    document.addEventListener('turbo:load', function() {
+    // Función para inicializar componentes Bootstrap
+    function initializeBootstrap() {
       // Dropdowns
       var dropdowns = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
       dropdowns.forEach(function(dropdown) {
         new bootstrap.Dropdown(dropdown)
       })
+      
+      // Tooltips
+      var tooltips = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      tooltips.forEach(function(tooltip) {
+        new bootstrap.Tooltip(tooltip)
+      })
+    }
+
+    // Inicializar al cargar la página
+    document.addEventListener('DOMContentLoaded', initializeBootstrap)
+    
+    // Inicializar con Turbo Drive
+    document.addEventListener('turbo:load', initializeBootstrap)
+    
+    // Manejar navegación con el botón "Atrás"
+    document.addEventListener('turbo:render', function() {
+      if (window.history.state && window.history.state.turbo) {
+        initializeBootstrap()
+      }
+    })
+    
+    // Solución adicional para formularios
+    document.addEventListener('turbo:submit-end', function(event) {
+      if (event.detail.success) {
+        initializeBootstrap()
+      }
     })
   </script>
 </body>
