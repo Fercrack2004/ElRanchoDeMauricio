@@ -19,6 +19,11 @@
     .card {
       border: 2px solid #d9534f;
       border-radius: 12px;
+      height: 100%; /* Asegura cards de igual altura */
+    }
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
     }
     .card-title {
       color: #b30000;
@@ -90,11 +95,6 @@
     </div>
   </nav>
 
-  <!-- Contenido principal -->
-  <main class="container mt-4">
-    <%= yield %>
-  </main>
-
   <!-- Banner principal -->
   <header class="py-5 text-center">
     <div class="container">
@@ -115,21 +115,36 @@
     </form>
   </section>
 
-  <!-- Sección de blogs populares -->
+  <!-- Sección de blogs populares (ACTUALIZADA) -->
   <section class="container">
     <h2 class="mb-4">Blogs Populares</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
-      <div class="col">
-        <div class="card">
-          <img src="https://source.unsplash.com/300x200/?pasta" class="card-img-top" alt="Pasta">
-          <div class="card-body">
-            <h5 class="card-title">Pasta Casera</h5>
-            <p class="card-text">Descubre cómo hacer la mejor pasta desde cero.</p>
-            <a href="#" class="btn btn-outline-primary" data-turbo="false">Ver Blog</a>
+      <% if @blogs.any? %>
+        <% @blogs.each do |blog| %>
+          <div class="col">
+            <div class="card">
+              <img src="https://source.unsplash.com/random/300x200/?food,<%= blog.title.parameterize %>" 
+                   class="card-img-top" 
+                   alt="<%= blog.title %>">
+              <div class="card-body">
+                <h5 class="card-title"><%= blog.title %></h5>
+                <p class="card-text"><%= truncate(blog.description, length: 100) %></p>
+                <%= link_to "Ver Blog", blog_path(blog), class: "btn btn-outline-primary", data: { turbo: false } %>
+              </div>
+            </div>
           </div>
+        <% end %>
+      <% else %>
+        <div class="col-12">
+          <div class="alert alert-info">No hay blogs disponibles todavía.</div>
         </div>
-      </div>
+      <% end %>
     </div>
+    <% if @blogs.any? %>
+      <div class="text-center mt-4">
+        <%= link_to "Ver todos los blogs", blogs_path, class: "btn btn-danger", data: { turbo: false } %>
+      </div>
+    <% end %>
   </section>
 
   <footer class="text-white mt-5 p-4 text-center">
@@ -138,34 +153,14 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   
-  <!-- Solución completa para Turbo Drive y Bootstrap -->
   <script>
-    // Inicialización de componentes cuando la página carga
-    function initializeBootstrapComponents() {
+    // Inicialización de componentes Bootstrap
+    document.addEventListener('turbo:load', function() {
       // Dropdowns
       var dropdowns = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
       dropdowns.forEach(function(dropdown) {
         new bootstrap.Dropdown(dropdown)
       })
-      
-      // Tooltips (si los usas)
-      var tooltips = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-      tooltips.forEach(function(tooltip) {
-        new bootstrap.Tooltip(tooltip)
-      })
-    }
-
-    // Inicializar cuando la página carga normalmente
-    document.addEventListener('DOMContentLoaded', initializeBootstrapComponents)
-    
-    // Inicializar cuando Turbo carga una página
-    document.addEventListener('turbo:load', initializeBootstrapComponents)
-    
-    // Solución especial para el botón "Atrás"
-    document.addEventListener('turbo:render', function() {
-      if (window.history.state && window.history.state.turbo) {
-        initializeBootstrapComponents()
-      }
     })
   </script>
 </body>

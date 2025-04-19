@@ -18,8 +18,7 @@ class InformationPagesController < ApplicationController
         end
     end
     private
-
-
+    
     def information_params
         params.require(:information).permit(:title, :info_type, :description)
     end
