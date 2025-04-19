@@ -1,2 +1,11 @@
 <h1><%= @information.title %></h1>
 <p><%= @information.description %></p>
+
+<p><%= link_to "Ver Reviews", information_reviews_path(@information), class: "btn btn-outline-secondary", data: { turbo: false } %></p>
+<p><%= link_to "Dejar Review", new_information_review_path(@information), class: "btn btn-primary", data: { turbo: false } %></p>
+<p><%= link_to "Ver Solicitudes", information_requests_path(@information), class: "btn btn-warning", data: { turbo: false } %></p>
+<p><%= link_to "Solicitar Editar", new_information_request_path(@information), class: "btn btn-warning", data: { turbo: false } %></p>
+
+<% if @information.chat_room.present? %>
+    <p><%= link_to "Chatroom Editores", information_chat_room_path(@information, @information.chat_room), data: { turbo: false } %></p>
+<% end %>

@@ -1,0 +1,22 @@
+<h3><%= @chat_room.name %></h3>
+
+<div id="messages">
+  <% @chat_room.messages.order(created_at: :asc).each do |message| %>
+    <p>
+      <strong><%= message.user.username %>:</strong> <%= message.content %>
+    </p>
+  <% end %>
+</div>
+
+<hr>
+
+<h2>Nuevo mensaje</h2>
+
+<%= form_with(model: [@chatable, @chat_room, @message]) do |form| %>
+  <div class="field">
+    <%= form.text_area :content, rows: 3 %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Send" %>
+  </div>
+<% end %>
