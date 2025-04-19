@@ -11,9 +11,16 @@ Rails.application.routes.draw do
   get 'render/index'
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Rutas para blogs
-  resources :blogs, only: [:new, :create, :index, :show]
-  resources :information_pages, only: [:new, :create, :index, :show]
+  resources :blogs, only: [:new, :create, :index, :show] do
+    resources :reviews, only: [:new, :create, :index, :show]
+    resources :requests, only: [:new, :create, :index, :show]
+  end
+  
+  resources :information_pages, only: [:new, :create, :index, :show] do
+    resources :reviews, only: [:new, :create, :index, :show]
+    resources :requests, only: [:new, :create, :index, :show]
+  end
+
 
   root "render#index"
 end

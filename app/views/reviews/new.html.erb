@@ -1,0 +1,19 @@
+<% if @reviewable.nil? %>
+  <p>Blog not found!</p>
+<% else %>
+    <h2>Dejar una Review para "<%= @reviewable.title %>"</h2>
+
+    <%= form_with(model: [@reviewable, @review]) do |form| %>
+    <div class="mb-3">
+        <%= form.label :score %>
+        <%= form.number_field :score, in: 1..5, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+        <%= form.label :content %>
+        <%= form.text_area :content, class: "form-control" %>
+    </div>
+
+    <%= form.submit "Submit Review", class: "btn btn-success" %>
+    <% end %>
+<% end %>
