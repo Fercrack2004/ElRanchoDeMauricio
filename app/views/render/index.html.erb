@@ -129,7 +129,13 @@
               <div class="card-body">
                 <h5 class="card-title"><%= blog.title %></h5>
                 <p class="card-text"><%= truncate(blog.description, length: 100) %></p>
-                <%= link_to "Ver Blog", blog_path(blog), class: "btn btn-outline-primary", data: { turbo: false } %>
+
+                <%= link_to "Ver Blog", blog_path(blog), class: "btn btn-outline-primary mb-2", data: { turbo: false } %><br>
+                <%= link_to "Ver Reviews", blog_reviews_path(blog), class: "btn btn-outline-secondary", data: { turbo: false } %>
+                <%= link_to "Dejar Review", new_blog_review_path(blog), class: "btn btn-primary ms-2" %>
+
+                
+                
               </div>
             </div>
           </div>
