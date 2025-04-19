@@ -1,4 +1,4 @@
-<h1>Reviews for <%= @reviewable.class.name %> "<%= @reviewable.try(:title) || @reviewable.try(:name) || @reviewable.id %>"</h1>
+<h1>Reviews for <%= @reviewable.class.name %> "<%= @reviewable.try(:title)%>"</h1>
 
 <% if @reviews.any? %>
   <div class="reviews-list">
