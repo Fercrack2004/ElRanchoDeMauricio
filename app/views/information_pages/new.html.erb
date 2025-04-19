@@ -1,0 +1,33 @@
+<h1>Crear nueva información</h1>
+
+<%= form_with model: @information, local: true do |form| %>
+  <% if @information.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@information.errors.count, "error") %> impidieron guardar esta información:</h2>
+      <ul>
+        <% @information.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title, "Título" %><br>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :info_type, "Tipo de Información" %><br>
+    <%= form.select :info_type, ["General", "Importante", "Privada"] %> <!-- Puedes ajustar estos valores -->
+  </div>
+
+  <div>
+    <%= form.label :description, "Descripción" %><br>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.submit "Crear Información" %>
+  </div>
+<% end %>

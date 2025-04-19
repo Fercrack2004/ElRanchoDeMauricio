@@ -2,17 +2,23 @@ class Blog < ApplicationRecord
     has_many :blog_participations
     has_many :users, through: :blog_participations
 
+    accepts_nested_attributes_for :blog_participations
+
     has_many :requests, as: :requestable
 
     has_many :reviews, as: :reviewable
 
     # Validaciones
-    validates :title, :date, :public_type, :description, presence: true
-    validate :checkear_editor
+    validates :title, :public_type, :description, presence: true
 
-    def checkear_editor
-        if users.none?(&:moderator?) #revisa si ni un user en blog_participation es editor
-            errors.add(:users, "no tiene editor")
-        end
-    end
+    
+    #validate :checkear_editor
+
+    #def checkear_editor
+    #    if users.none?(&:moderator?) #revisa si ni un user en blog_participation es editor
+    #        errors.add(:users, "no tiene editor")
+    #    end
+    #end
+
+    
 end

@@ -21,6 +21,5 @@ class User < ApplicationRecord
   validates :phone_number, :email, :password, :role, presence: true
   validates :password, length: {minimum: 6} #puede ser que al editar un perfil se pida que cambie la constraseña
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})\z/i} #https://stackoverflow.com/questions/38611405/email-validation-in-ruby-on-rails
-
-
+  
 end
