@@ -21,6 +21,9 @@ Rails.application.routes.draw do
     resources :requests, only: [:new, :create, :index, :show]
   end
 
+  # Rutas personalizadas para requests
+  patch "/blogs/:blog_id/requests/:id", to: "requests#update", as: "update_request"
+
 
   root "render#index"
 end

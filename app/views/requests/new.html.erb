@@ -1,0 +1,14 @@
+<% if @requestable.nil? %>
+  <p>Page not found!</p>
+<% else %>
+    <h2>Dejar una Solicitud para editar "<%= @requestable.title %>"</h2>
+
+    <%= form_with(model: [@requestable, @request]) do |form| %>
+    <div class="mb-3">
+        <%= form.label :description %>
+        <%= form.text_area :description, class: "form-control" %>
+    </div>
+
+    <%= form.submit "Send Request", class: "btn btn-success" %>
+    <% end %>
+<% end %>

@@ -1,0 +1,16 @@
+<h1>Requests for <%= @requestable.class.name %> "<%= @requestable.try(:title) %>"</h1>
+
+<% if @requests.any? %>
+  <div class="reviews-list">
+    <% @requests.each do |request| %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <p class="card-text"><%= request.description %></p>
+          <small class="text-muted">By <%= request.user.username %> on <%= request.created_at.strftime("%b %d, %Y") %></small>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>No requests yet.</p>
+<% end %>

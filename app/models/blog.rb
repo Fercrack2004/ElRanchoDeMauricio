@@ -1,15 +1,15 @@
 class Blog < ApplicationRecord
-    has_many :blog_participations
-    has_many :users, through: :blog_participations
+  has_many :blog_participations
+  has_many :users, through: :blog_participations
 
-    accepts_nested_attributes_for :blog_participations
+  accepts_nested_attributes_for :blog_participations
 
-    has_many :requests, as: :requestable
+  has_many :requests, as: :requestable
 
-    has_many :reviews, as: :reviewable
+  has_many :reviews, as: :reviewable
 
     # Validaciones
-    validates :title, :public_type, :description, presence: true
+  validates :title, :public_type, :description, presence: true
 
     #has_one_attached :image
     #validate :checkear_editor
