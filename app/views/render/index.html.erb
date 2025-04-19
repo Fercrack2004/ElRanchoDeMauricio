@@ -59,7 +59,10 @@
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <a class="navbar-brand" href="#">ElRanchoDeMauricio</a>
-      <div class="collapse navbar-collapse">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav me-auto">
           <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Blogs</a></li>
@@ -71,9 +74,13 @@
           <% if user_signed_in? %>
             <%= link_to "Editar Perfil", edit_user_registration_path, class: "btn btn-outline-light me-2" %>
 
-            <!-- Dropdown de Crear -->
-            <div class="dropdown me-2">
-              <button class="btn btn-success dropdown-toggle" type="button" id="crearDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <!-- Dropdown de Crear - con solución Turbo -->
+            <div class="dropdown me-2" data-turbo="false">
+              <button class="btn btn-success dropdown-toggle"
+                      type="button"
+                      id="crearDropdown"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
                 Crear
               </button>
               <ul class="dropdown-menu" aria-labelledby="crearDropdown">
@@ -134,5 +141,15 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Inicialización manual de dropdowns para Turbo -->
+  <script>
+    document.addEventListener('turbo:load', function() {
+      var dropdowns = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+      dropdowns.forEach(function(dropdown) {
+        new bootstrap.Dropdown(dropdown)
+      })
+    })
+  </script>
 </body>
 </html>

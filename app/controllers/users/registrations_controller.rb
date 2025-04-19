@@ -50,6 +50,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:account_update, keys: [:username, :phone_number, :description])
   end
 
+  def update_resource(resource, params)
+    if params[:password].blank? && params[:password_confirmation].blank?
+      # Elimina campos de contraseña pero mantiene current_password para validación
+      params.delete(:password)
+      params.delete(:password_confirmation)
+      
+      # Verifica la contraseña actual primero
+      if resource.valid_password?(params[:current_password])
+        resource.update_without_password(params.except(:current_password))
+      else
+        resource.errors.add(:current_password, params[:current_password].blank? ? :blank : :invalid)
+        false
+      end
+    else
+      # Comportamiento normal para cambio de contraseña
+      super
+    end
+  end
   # The path used after sign up.
   # def after_sign_up_path_for(resource)
   #   super(resource)
