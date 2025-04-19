@@ -14,10 +14,17 @@ Rails.application.routes.draw do
   resources :blogs do
     resources :reviews
     resources :requests
+    resources :chat_rooms do
+      resources :messages
+    end
   end
+  
   resources :information_pages do
     resources :reviews
     resources :requests
+    resources :chat_rooms do
+      resources :messages
+    end
   end
 
   root "render#index"

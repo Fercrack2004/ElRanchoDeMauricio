@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_19_153729) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_19_181652) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_19_153729) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "chat_rooms", force: :cascade do |t|
+    t.string "name"
+    t.string "chatable_type", null: false
+    t.bigint "chatable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chatable_type", "chatable_id"], name: "index_chat_rooms_on_chatable"
+  end
+
   create_table "information_pages", force: :cascade do |t|
     t.string "title"
     t.string "info_type"
@@ -49,6 +58,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_19_153729) do
     t.datetime "updated_at", null: false
     t.index ["information_id"], name: "index_information_participations_on_information_id"
     t.index ["user_id"], name: "index_information_participations_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.bigint "chat_room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_room_id"], name: "index_messages_on_chat_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -96,6 +115,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_19_153729) do
   add_foreign_key "blog_participations", "users"
   add_foreign_key "information_participations", "information_pages"
   add_foreign_key "information_participations", "users"
+  add_foreign_key "messages", "chat_rooms"
+  add_foreign_key "messages", "users"
   add_foreign_key "requests", "users"
   add_foreign_key "reviews", "users"
 end
