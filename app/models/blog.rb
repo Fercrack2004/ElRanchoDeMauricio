@@ -11,7 +11,7 @@ class Blog < ApplicationRecord
     # Validaciones
     validates :title, :public_type, :description, presence: true
 
-    
+    #has_one_attached :image
     #validate :checkear_editor
 
     #def checkear_editor

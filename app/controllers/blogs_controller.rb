@@ -19,6 +19,10 @@ class BlogsController < ApplicationController
     end
 
 
+    def index
+        @blogs = Blog.includes(:users).order(created_at: :desc).limit(3) # Muestra los 3 más recientes
+      end
+
     private
 
     def blog_params
