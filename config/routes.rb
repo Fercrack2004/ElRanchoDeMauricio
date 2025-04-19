@@ -15,7 +15,6 @@ Rails.application.routes.draw do
     resources :reviews
     resources :requests
   end
-
   resources :information_pages do
     resources :reviews
     resources :requests

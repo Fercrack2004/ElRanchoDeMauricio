@@ -6,6 +6,14 @@
       <div class="card mb-3">
         <div class="card-body">
           <p class="card-text"><%= request.description %></p>
+          <% if request.pending? %>
+            <p class="card-text">Estado: Pendiente</p>
+          <% elsif request.accepted? %>
+            <p class="card-text">Estado: Aceptada</p>
+          <% elsif request.rejected? %>
+            <p class="card-text">Estado: Rechazada</p>
+          <% end %>
+          <%= link_to "Ver Solicitud", polymorphic_path([@requestable, request]), class: "btn btn-outline-primary", data: { turbo: false } %>
           <small class="text-muted">By <%= request.user.username %> on <%= request.created_at.strftime("%b %d, %Y") %></small>
         </div>
       </div>
