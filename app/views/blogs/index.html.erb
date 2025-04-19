@@ -1,1 +1,21 @@
-<h1>Not Implemented yet</h1>
+<h1>Blogs</h1>
+<% @blog.each do |blog| %>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title"><%= blog.title %></h5>
+        <p class="card-text"><strong>Descripción:</strong> <%= blog.description %></p>
+
+        <% autor = blog.blog_participations.find_by(contribution: :autor)&.user %>
+        <p class="card-text"><strong>Autor:</strong> <%= autor&.email || "Desconocido" %></p>
+
+        <p class="card-text"><strong>Fecha de creación:</strong> <%= blog.created_at.strftime("%d/%m/%Y %H:%M") %></p>
+
+        <% contributors = blog.blog_participations.where.not(contribution: :autor).includes(:user) %>
+        <% if contributors.any? %>
+          <p class="card-text"><strong>Colaboradores:</strong>
+            <%= contributors.map { |bp| bp.user.email }.join(", ") %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>

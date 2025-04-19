@@ -1,10 +1,9 @@
 class RenderController < ApplicationController
   def index
-    @blogs = Blog.includes(:blog_participations, :users)
-                 .order(created_at: :desc)
-                 .limit(3)
-  rescue => e
+    @blogs = Blog.order(created_at: :desc).limit(3)
+    @informations = Information.order(created_at: :desc).limit(3)
+  rescue ActiveRecord::RecordNotFound
     @blogs = []
-    logger.error "Error al cargar blogs: #{e.message}"
+    @informations = []
   end
 end

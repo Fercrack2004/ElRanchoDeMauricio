@@ -49,8 +49,11 @@
     footer {
       background-color: #2e8b57;
     }
-    h1, h2 {
+    h1, h2, h3 {
       font-family: 'Georgia', serif;
+    }
+    .section-spacing {
+      margin-bottom: 3rem;
     }
   </style>
 </head>
@@ -66,8 +69,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a class="nav-link" href="/" data-turbo="false">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="/blogs" data-turbo="false">Blogs</a></li>
+        <li class="nav-item"><a class="nav-link" href="/" data-turbo="false">Inicio</a></li>
+        <li class="nav-item"><%= link_to "Blogs", blogs_path, class: "nav-link", data: { turbo: false } %></li>
+        <li class="nav-item"><%= link_to "Informaciones", information_pages_path, class: "nav-link", data: { turbo: false } %></li>
           <li class="nav-item">
             <%= link_to "Mi Perfil", edit_user_registration_path, class: "nav-link", data: { turbo: false } %>
           </li>
@@ -123,7 +127,7 @@
   </section>
 
   <!-- Sección de blogs populares -->
-  <section class="container">
+  <section class="container section-spacing">
     <h2 class="mb-4">Blogs Populares</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <% if @blogs.any? %>
@@ -154,6 +158,42 @@
     <% if @blogs.any? %>
       <div class="text-center mt-4">
         <%= link_to "Ver todos los blogs", blogs_path, class: "btn btn-danger", data: { turbo: false } %>
+      </div>
+    <% end %>
+  </section>
+
+  <!-- Sección de informaciones populares -->
+  <section class="container section-spacing">
+    <h2 class="mb-4">Informaciones Populares</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <% if @informations.any? %>
+        <% @informations.each do |information| %>
+          <div class="col">
+            <div class="card h-100">
+              <img src="https://source.unsplash.com/random/300x200/?ingredients,<%= information.title.parameterize %>" 
+                   class="card-img-top" 
+                   alt="<%= information.title %>">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title"><%= information.title %></h5>
+                <p class="card-text flex-grow-1"><%= truncate(information.description, length: 100) %></p>
+                <div class="mt-auto">
+                  <div class="d-grid gap-2">
+                    <%= link_to "Ver Información", information_path(information), class: "btn btn-outline-primary", data: { turbo: false } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="col-12">
+          <div class="alert alert-info">No hay informaciones disponibles todavía.</div>
+        </div>
+      <% end %>
+    </div>
+    <% if @informations.any? %>
+      <div class="text-center mt-4">
+        <%= link_to "Ver todas las informaciones", information_pages_path, class: "btn btn-danger", data: { turbo: false } %>
       </div>
     <% end %>
   </section>
