@@ -11,19 +11,15 @@ Rails.application.routes.draw do
   get 'render/index'
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :blogs, only: [:new, :create, :index, :show] do
-    resources :reviews, only: [:new, :create, :index, :show]
-    resources :requests, only: [:new, :create, :index, :show]
-  end
-  
-  resources :information_pages, only: [:new, :create, :index, :show] do
-    resources :reviews, only: [:new, :create, :index, :show]
-    resources :requests, only: [:new, :create, :index, :show]
+  resources :blogs do
+    resources :reviews
+    resources :requests
   end
 
-  # Rutas personalizadas para requests
-  patch "/blogs/:blog_id/requests/:id", to: "requests#update", as: "update_request"
-
+  resources :information_pages do
+    resources :reviews
+    resources :requests
+  end
 
   root "render#index"
 end
