@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
 
+  has_many :messages
+
   has_many :blog_participations
   has_many :blogs, through: :blog_participations
 
