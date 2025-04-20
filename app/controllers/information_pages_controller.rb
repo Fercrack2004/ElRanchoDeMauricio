@@ -1,8 +1,14 @@
 class InformationPagesController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show]
-  
+    
     def index
-      @information = Information.all
+      @search_term = params[:search]
+      @information = if @search_term.present?
+                        Information.where("title LIKE ? OR description LIKE ?", 
+                                        "%#{@search_term}%", "%#{@search_term}%")
+                      else
+                        Information.all
+                      end.order(created_at: :desc)
     end
   
     def show
@@ -26,17 +32,18 @@ class InformationPagesController < ApplicationController
         render :new, status: :unprocessable_entity
       end
     end
-
+  
     def edit
       @information = Information.find(params[:id])
     end
   
     def update
-      @information = Information.find(params[:id])
-      if @information.update(blog_params)
-        redirect_to @information
+        @information = Information.find(params[:id])
+        if @information.update(blog_params)
+          @information.chat_room.update(name: "Chat de editores: \"#{@information.title}\"")
+          redirect_to @information
+        end
       end
-    end
   
     private
   
