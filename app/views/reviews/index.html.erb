@@ -2,6 +2,8 @@
 
 <% if @reviews.any? %>
   <div class="reviews-list">
+    <%= link_to "Volver", root_path, class: "btn btn-secondary mt-3" %>
+
     <% @reviews.each do |review| %>
       <div class="card mb-3">
         <div class="card-body">
