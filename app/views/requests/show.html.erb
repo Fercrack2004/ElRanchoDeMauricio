@@ -12,6 +12,8 @@
 <!-- Botones de aceptar o rechazar solicitud -->
 <% if @request.pending? %>
   <div class="mt-3">
+    <%= link_to "Volver", root_path, class: "btn btn-secondary mt-3" %>
+
     <%= button_to "Aceptar", polymorphic_path([@request.requestable, @request], state: "accepted"), method: :patch, class: "btn btn-success" %>
     
     <%= button_to "Rechazar", polymorphic_path([@request.requestable, @request], state: "rejected"), method: :patch, class: "btn btn-danger", data: { turbo_confirm: "¿Seguro que quieres rechazar esta solicitud?" } %>

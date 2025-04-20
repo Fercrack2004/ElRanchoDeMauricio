@@ -18,8 +18,10 @@
           <small class="text-muted">By <%= request.user.username %> on <%= request.created_at.strftime("%b %d, %Y") %></small>
         </div>
       </div>
+      <%= link_to "Volver", root_path, class: "btn btn-secondary mt-3" %>
     <% end %>
   </div>
 <% else %>
   <p>No requests yet.</p>
+  
 <% end %>
