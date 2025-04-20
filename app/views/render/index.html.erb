@@ -55,6 +55,11 @@
     .section-spacing {
       margin-bottom: 3rem;
     }
+    .search-results-title {
+      border-bottom: 2px solid #d9534f;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -116,87 +121,154 @@
 
   <!-- Sección de búsqueda -->
   <section class="container my-4">
-    <form class="row g-3" data-turbo="false">
+    <%= form_with(url: root_path, method: :get, local: true, class: "row g-3", data: { turbo: false }) do |form| %>
       <div class="col-md-10">
-        <input type="text" class="form-control" placeholder="Buscar recetas o ingredientes...">
+        <%= form.text_field :search, 
+                           value: params[:search],
+                           class: "form-control", 
+                           placeholder: "Buscar recetas o ingredientes..." %>
       </div>
       <div class="col-md-2 d-grid">
-        <button type="submit" class="btn btn-danger">Buscar</button>
+        <%= form.submit "Buscar", class: "btn btn-danger" %>
+        <% if params[:search].present? %>
+          <%= link_to "Limpiar", root_path, class: "btn btn-outline-secondary mt-2" %>
+        <% end %>
       </div>
-    </form>
+    <% end %>
   </section>
 
-  <!-- Sección de blogs populares -->
-  <section class="container section-spacing">
-    <h2 class="mb-4">Blogs Populares</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+  <% if params[:search].present? %>
+    <!-- Sección de resultados de búsqueda -->
+    <section class="container section-spacing">
+      <h2 class="mb-4 search-results-title">Resultados para "<%= params[:search] %>"</h2>
+      
       <% if @blogs.any? %>
-        <% @blogs.each do |blog| %>
-          <div class="col">
-            <div class="card h-100">
-              <img src="https://source.unsplash.com/random/300x200/?food,<%= blog.title.parameterize %>" 
-                   class="card-img-top" 
-                   alt="<%= blog.title %>">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title"><%= blog.title %></h5>
-                <p class="card-text flex-grow-1"><%= truncate(blog.description, length: 100) %></p>
-                <div class="mt-auto">
-                  <div class="d-grid gap-2">
-                    <%= link_to "Ver Blog", blog_path(blog), class: "btn btn-outline-primary", data: { turbo: false } %>
+        <h3>Blogs</h3>
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+          <% @blogs.each do |blog| %>
+            <div class="col">
+              <div class="card h-100">
+                <img src="https://source.unsplash.com/random/300x200/?food,<%= blog.title.parameterize %>" 
+                     class="card-img-top" 
+                     alt="<%= blog.title %>">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title"><%= blog.title %></h5>
+                  <p class="card-text flex-grow-1"><%= truncate(blog.description, length: 100) %></p>
+                  <div class="mt-auto">
+                    <div class="d-grid gap-2">
+                      <%= link_to "Ver Blog", blog_path(blog), class: "btn btn-outline-primary", data: { turbo: false } %>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        <% end %>
-      <% else %>
-        <div class="col-12">
-          <div class="alert alert-info">No hay blogs disponibles todavía.</div>
+          <% end %>
         </div>
       <% end %>
-    </div>
-    <% if @blogs.any? %>
-      <div class="text-center mt-4">
-        <%= link_to "Ver todos los blogs", blogs_path, class: "btn btn-danger", data: { turbo: false } %>
-      </div>
-    <% end %>
-  </section>
 
-  <!-- Sección de informaciones populares -->
-  <section class="container section-spacing">
-    <h2 class="mb-4">Informaciones Populares</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
       <% if @informations.any? %>
-        <% @informations.each do |information| %>
-          <div class="col">
-            <div class="card h-100">
-              <img src="https://source.unsplash.com/random/300x200/?ingredients,<%= information.title.parameterize %>" 
-                   class="card-img-top" 
-                   alt="<%= information.title %>">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title"><%= information.title %></h5>
-                <p class="card-text flex-grow-1"><%= truncate(information.description, length: 100) %></p>
-                <div class="mt-auto">
-                  <div class="d-grid gap-2">
-                    <%= link_to "Ver Información", information_path(information), class: "btn btn-outline-primary", data: { turbo: false } %>
+        <h3>Informaciones</h3>
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+          <% @informations.each do |information| %>
+            <div class="col">
+              <div class="card h-100">
+                <img src="https://source.unsplash.com/random/300x200/?ingredients,<%= information.title.parameterize %>" 
+                     class="card-img-top" 
+                     alt="<%= information.title %>">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title"><%= information.title %></h5>
+                  <p class="card-text flex-grow-1"><%= truncate(information.description, length: 100) %></p>
+                  <div class="mt-auto">
+                    <div class="d-grid gap-2">
+                      <%= link_to "Ver Información", information_path(information), class: "btn btn-outline-primary", data: { turbo: false } %>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        <% end %>
-      <% else %>
-        <div class="col-12">
-          <div class="alert alert-info">No hay informaciones disponibles todavía.</div>
+          <% end %>
         </div>
       <% end %>
-    </div>
-    <% if @informations.any? %>
-      <div class="text-center mt-4">
-        <%= link_to "Ver todas las informaciones", information_pages_path, class: "btn btn-danger", data: { turbo: false } %>
+
+      <% if @blogs.empty? && @informations.empty? %>
+        <div class="alert alert-info">
+          No se encontraron resultados para "<%= params[:search] %>"
+        </div>
+      <% end %>
+    </section>
+  <% else %>
+    <!-- Sección de blogs populares (solo sin búsqueda) -->
+    <section class="container section-spacing">
+      <h2 class="mb-4">Blogs Populares</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% if @blogs.any? %>
+          <% @blogs.each do |blog| %>
+            <div class="col">
+              <div class="card h-100">
+                <img src="https://source.unsplash.com/random/300x200/?food,<%= blog.title.parameterize %>" 
+                     class="card-img-top" 
+                     alt="<%= blog.title %>">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title"><%= blog.title %></h5>
+                  <p class="card-text flex-grow-1"><%= truncate(blog.description, length: 100) %></p>
+                  <div class="mt-auto">
+                    <div class="d-grid gap-2">
+                      <%= link_to "Ver Blog", blog_path(blog), class: "btn btn-outline-primary", data: { turbo: false } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="col-12">
+            <div class="alert alert-info">No hay blogs disponibles todavía.</div>
+          </div>
+        <% end %>
       </div>
-    <% end %>
-  </section>
+      <% if @blogs.any? %>
+        <div class="text-center mt-4">
+          <%= link_to "Ver todos los blogs", blogs_path, class: "btn btn-danger", data: { turbo: false } %>
+        </div>
+      <% end %>
+    </section>
+
+    <!-- Sección de informaciones populares (solo sin búsqueda) -->
+    <section class="container section-spacing">
+      <h2 class="mb-4">Informaciones Populares</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% if @informations.any? %>
+          <% @informations.each do |information| %>
+            <div class="col">
+              <div class="card h-100">
+                <img src="https://source.unsplash.com/random/300x200/?ingredients,<%= information.title.parameterize %>" 
+                     class="card-img-top" 
+                     alt="<%= information.title %>">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title"><%= information.title %></h5>
+                  <p class="card-text flex-grow-1"><%= truncate(information.description, length: 100) %></p>
+                  <div class="mt-auto">
+                    <div class="d-grid gap-2">
+                      <%= link_to "Ver Información", information_path(information), class: "btn btn-outline-primary", data: { turbo: false } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="col-12">
+            <div class="alert alert-info">No hay informaciones disponibles todavía.</div>
+          </div>
+        <% end %>
+      </div>
+      <% if @informations.any? %>
+        <div class="text-center mt-4">
+          <%= link_to "Ver todas las informaciones", information_pages_path, class: "btn btn-danger", data: { turbo: false } %>
+        </div>
+      <% end %>
+    </section>
+  <% end %>
 
   <footer class="text-white mt-5 p-4 text-center">
     &copy; 2025 ElRanchoDeMauricio. Todos los derechos reservados.

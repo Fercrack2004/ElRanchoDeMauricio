@@ -5,7 +5,7 @@
 <p><%= link_to "Dejar Review", new_information_review_path(@information), class: "btn btn-primary", data: { turbo: false } %></p>
 
 <% participation = @information.information_participations.find_by(user: current_user) %>
-<% if participation&.autor_contribution? || current_user.admin? || current_user.moderator? %>
+<% if current_user && (participation&.autor_contribution? || current_user.admin? || current_user.moderator?) %>
 <p><%= link_to "Ver Solicitudes", information_requests_path(@information), class: "btn btn-warning", data: { turbo: false } %></p>
 <% end %>
 
