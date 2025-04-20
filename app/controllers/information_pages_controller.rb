@@ -26,6 +26,17 @@ class InformationPagesController < ApplicationController
         render :new, status: :unprocessable_entity
       end
     end
+
+    def edit
+      @information = Information.find(params[:id])
+    end
+  
+    def update
+      @information = Information.find(params[:id])
+      if @information.update(blog_params)
+        redirect_to @information
+      end
+    end
   
     private
   

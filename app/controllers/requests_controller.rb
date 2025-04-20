@@ -39,6 +39,15 @@ class RequestsController < ApplicationController
                   participation.contribution = :editor
                   participation.save
                 end
+              elsif @requestable.is_a?(Information) && @requestable.present?
+                participation = InformationParticipation.find_or_initialize_by(
+                  user: @request.user,
+                  information: @requestable
+                )
+                unless participation.autor_contribution?
+                  participation.contribution = :editor
+                  participation.save
+                end
               end
         
             

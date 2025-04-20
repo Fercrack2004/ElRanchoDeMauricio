@@ -3,13 +3,22 @@
 
 <p><%= link_to "Ver Reviews", blog_reviews_path(@blog), class: "btn btn-outline-secondary", data: { turbo: false } %></p>
 <p><%= link_to "Dejar Review", new_blog_review_path(@blog), class: "btn btn-primary", data: { turbo: false } %></p>
+
+<% participation = @blog.blog_participations.find_by(user: current_user) %>
+<% if participation&.autor_contribution? || current_user.admin? || current_user.moderator? %>
 <p><%= link_to "Ver Solicitudes", blog_requests_path(@blog), class: "btn btn-warning", data: { turbo: false } %></p>
-<p><%= link_to "Solicitar Editar", new_blog_request_path(@blog), class: "btn btn-warning", data: { turbo: false } %></p>
+<% end %>
+
+<% if !participation&.autor_contribution? && !participation&.editor_contribution? %>
+  <p><%= link_to "Solicitar Editar", new_blog_request_path(@blog), class: "btn btn-warning", data: { turbo: false } %></p>
+<% end %>
 
 <% if @blog.chat_room.present?%>
-
-  <% participation = @blog.blog_participations.find_by(user: current_user) %>
   <% if participation&.autor_contribution? || participation&.editor_contribution? %>
     <p><%= link_to "Chatroom Editores", blog_chat_room_path(@blog, @blog.chat_room), data: { turbo: false } %></p>
   <% end %>
+<% end %>
+
+<% if participation&.autor_contribution? || participation&.editor_contribution? %>
+  <p><%= link_to "Editar Blog", edit_blog_path(@blog), data: { turbo: false } %></p>
 <% end %>

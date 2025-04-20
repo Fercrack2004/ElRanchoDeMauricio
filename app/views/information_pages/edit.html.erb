@@ -1,0 +1,24 @@
+<h1>Editar Informacion</h1>
+
+<%= form_with model: @information, local: true do |form| %>
+
+  <div>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :info_type %>
+    <%= form.text_area :info_type %>
+  </div>
+
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.submit "Actualizar Informacion" %>
+  </div>
+<% end %>
