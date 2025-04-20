@@ -3,9 +3,23 @@
 
 <p><%= link_to "Ver Reviews", information_reviews_path(@information), class: "btn btn-outline-secondary", data: { turbo: false } %></p>
 <p><%= link_to "Dejar Review", new_information_review_path(@information), class: "btn btn-primary", data: { turbo: false } %></p>
+
+<% participation = @information.information_participations.find_by(user: current_user) %>
+<% if participation&.autor_contribution? || current_user.admin? || current_user.moderator? %>
 <p><%= link_to "Ver Solicitudes", information_requests_path(@information), class: "btn btn-warning", data: { turbo: false } %></p>
-<p><%= link_to "Solicitar Editar", new_information_request_path(@information), class: "btn btn-warning", data: { turbo: false } %></p>
+<% end %>
+
+<% if !participation&.autor_contribution? && !participation&.editor_contribution?  %>
+  <p><%= link_to "Solicitar Editar", new_information_request_path(@information), class: "btn btn-warning", data: { turbo: false } %></p>
+<% end %>
+
+<% if participation&.autor_contribution? || participation&.editor_contribution? %>
+<p><%= link_to "Editar Informacion", edit_information_path(@information), data: { turbo: false } %></p>
+<% end %>
 
 <% if @information.chat_room.present? %>
+  <% if participation&.autor_contribution? || participation&.editor_contribution? %>
     <p><%= link_to "Chatroom Editores", information_chat_room_path(@information, @information.chat_room), data: { turbo: false } %></p>
+    <% end %>
 <% end %>
+
