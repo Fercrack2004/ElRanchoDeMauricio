@@ -6,6 +6,10 @@
 <p><%= link_to "Ver Solicitudes", blog_requests_path(@blog), class: "btn btn-warning", data: { turbo: false } %></p>
 <p><%= link_to "Solicitar Editar", new_blog_request_path(@blog), class: "btn btn-warning", data: { turbo: false } %></p>
 
-<% if @blog.chat_room.present? %>
+<% if @blog.chat_room.present?%>
+
+  <% participation = @blog.blog_participations.find_by(user: current_user) %>
+  <% if participation&.autor_contribution? || participation&.editor_contribution? %>
     <p><%= link_to "Chatroom Editores", blog_chat_room_path(@blog, @blog.chat_room), data: { turbo: false } %></p>
+  <% end %>
 <% end %>

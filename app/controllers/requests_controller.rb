@@ -29,6 +29,19 @@ class RequestsController < ApplicationController
         @request = @requestable.requests.find(params[:id])
         if @request.update(state: params[:state])
             if @request.accepted?
+              if @requestable.is_a?(Blog) && @requestable.present?
+                participation = BlogParticipation.find_or_initialize_by(
+                  user: @request.user,
+                  blog: @requestable
+                )
+        
+                unless participation.autor_contribution?
+                  participation.contribution = :editor
+                  participation.save
+                end
+              end
+        
+            
                 redirect_to polymorphic_path([@requestable, :requests]), notice: "Solicitd aceptada!"
             else
                 redirect_to polymorphic_path([@requestable, :requests]), notice: "Solicitd rechazada!"
