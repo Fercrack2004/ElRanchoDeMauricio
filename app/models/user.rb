@@ -15,6 +15,12 @@ class User < ApplicationRecord
 
   has_many :requests
 
+  has_many :blog_participations, dependent: :destroy
+  
+  has_many :reviews, dependent: :destroy
+  has_many :messages, dependent: :destroy
+  has_many :requests, dependent: :destroy
+
   # Divide los tipos de usuario
   enum role: { user: 0, moderator: 1, admin: 2 }
 
