@@ -90,7 +90,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # Parámetros permitidos para actualización
   def configure_account_update_params
     devise_parameter_sanitizer.permit(:account_update, 
-      keys: [:username, :phone_number, :description])
+                                      keys: [:username, :phone_number, :description])
   end
 
   # Lógica especial para actualización sin contraseña
@@ -129,7 +129,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # Redirección después de registro exitoso
-  def after_sign_up_path_for(resource)
+  def after_sign_up_path_for(_resource)
     root_path # Cambia esto según tus necesidades
   end
 
@@ -139,7 +139,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # Redirección después de cancelar cuenta
-  def after_sign_out_path_for(resource)
+  def after_sign_out_path_for(_resource)
     new_user_session_path
   end
 end

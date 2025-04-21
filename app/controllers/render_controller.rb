@@ -23,13 +23,13 @@ class RenderController < ApplicationController
 
   def search_blogs(term)
     Blog.where("title LIKE ? OR description LIKE ?", 
-              "%#{term}%", "%#{term}%")
-       .order(created_at: :desc)
+               "%#{term}%", "%#{term}%")
+        .order(created_at: :desc)
   end
 
   def search_informations(term)
     Information.where("title LIKE ? OR description LIKE ?", 
-                     "%#{term}%", "%#{term}%")
-              .order(created_at: :desc)
+                      "%#{term}%", "%#{term}%")
+               .order(created_at: :desc)
   end
 end
