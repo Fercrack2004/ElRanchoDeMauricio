@@ -9,16 +9,7 @@ class Blog < ApplicationRecord
   has_one :chat_room, as: :chatable, dependent: :destroy
 
     # Validaciones
-  validates :title, :public_type, :description, presence: true
-
-    #has_one_attached :image
-    #validate :checkear_editor
-
-    #def checkear_editor
-    #    if users.none?(&:moderator?) #revisa si ni un user en blog_participation es editor
-    #        errors.add(:users, "no tiene editor")
-    #    end
-    #end
+  validates :title, :public_type, :description, :cook_time, presence: true
 
     
 end

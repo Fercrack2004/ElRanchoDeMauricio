@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/index'
+  get 'users/show'
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
@@ -11,6 +13,8 @@ Rails.application.routes.draw do
 
   get 'render/index'
   get "up" => "rails/health#show", as: :rails_health_check
+
+  resources :users, only: [:index, :show]
 
   resources :blogs do
     resources :reviews
