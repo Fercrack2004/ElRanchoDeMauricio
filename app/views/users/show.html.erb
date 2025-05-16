@@ -3,3 +3,10 @@
 <p>Role: <%= @user.role %></p>
 <p>Description: <%= @user.description %></p>
 <p>ID: <%= @user.id %></p>
+
+<% if current_user.admin? %>
+    <%= button_to "Eliminar Usuario", user_path(@user),
+              method: :delete,
+              data: { confirm: "Seguro de que quieres eliminarlo?" },
+              class: "btn btn-danger" %>
+<% end %>
