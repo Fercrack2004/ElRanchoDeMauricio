@@ -39,7 +39,7 @@ class InformationPagesController < ApplicationController
   
   def update
     @information = Information.find(params[:id])
-      if @information.update(blog_params)
+      if @information.update(information_params)
         @information.chat_room.update(name: "Chat de editores: \"#{@information.title}\"")
         redirect_to @information
       end

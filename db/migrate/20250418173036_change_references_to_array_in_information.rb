@@ -1,7 +1,7 @@
 class ChangeReferencesToArrayInInformation < ActiveRecord::Migration[7.1]
   def up
     execute <<~SQL
-      ALTER TABLE information
+      ALTER TABLE information_pages
       ALTER COLUMN "references"
       SET DATA TYPE character varying[]
       USING ARRAY["references"],
@@ -11,7 +11,7 @@ class ChangeReferencesToArrayInInformation < ActiveRecord::Migration[7.1]
 
   def down
     execute <<~SQL
-      ALTER TABLE information
+      ALTER TABLE information_pages
       ALTER COLUMN "references"
       SET DATA TYPE character varying
       USING "references"[1],
