@@ -5,12 +5,26 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
 
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+
   </head>
- 
+  <script>
+  document.addEventListener("turbo:load", function() {
+
+    console.log("Turbo: estilos recargados correctamente");
+
+    // document.querySelectorAll(".tu-clase")?.forEach(el => el.classList.add("text-black"));
+  });
+</script>
+<%= javascript_include_tag "controllers", type: "module" %>
+<div data-controller="tailwind-fix"></div>
+
+
   <body>
     <% unless current_page?(root_path) %>
       <% if user_signed_in? %>

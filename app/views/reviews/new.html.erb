@@ -1,7 +1,6 @@
 <% if @reviewable.nil? %>
   <p>Blog not found!</p>
 <% else %>
-    <%= link_to "Volver", root_path, class: "btn btn-secondary mt-3" %>
 
     <h2>Dejar una Review para "<%= @reviewable.title %>"</h2>
 
