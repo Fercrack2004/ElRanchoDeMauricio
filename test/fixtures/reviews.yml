@@ -2,14 +2,10 @@
 
 one:
   score: 1
-  content: MyString
+  content: "{MyString}"
   user: one
-  information: one
-  blog: one
 
 two:
   score: 1
-  content: MyString
+  content: "{MyString}"
   user: two
-  information: two
-  blog: two
