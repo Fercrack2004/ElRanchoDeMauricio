@@ -1,15 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  date: 2025-04-18
-  info_type: MyString
-  description: MyString
-  references: MyString
+  title: "{MyString}"
+  info_type: "{MyString}"
+  description: "{MyString}"
+  references: "{MyString}"
 
 two:
-  title: MyString
-  date: 2025-04-18
-  info_type: MyString
-  description: MyString
-  references: MyString
+  title: "{MyString}"
+  info_type: "{MyString}"
+  description: "{MyString}"
+  references: "{MyString}"

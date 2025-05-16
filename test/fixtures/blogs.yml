@@ -2,12 +2,10 @@
 
 one:
   title: MyString
-  date: 2025-04-18
-  public_type: MyString
-  description: MyString
+  public_type: "{MyString}"
+  description: "{MyString}"
 
 two:
-  title: MyString
-  date: 2025-04-18
-  public_type: MyString
-  description: MyString
+  title: "{MyString}"
+  public_type: "{MyString}"
+  description: "{MyString}"
