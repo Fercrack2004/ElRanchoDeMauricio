@@ -7,15 +7,11 @@ class User < ApplicationRecord
   has_many :messages
   has_many :chat_rooms, through: :messages
 
-  has_many :blog_participations
+  has_many :blog_participations, dependent: :destroy
   has_many :blogs, through: :blog_participations
 
-  has_many :information_participations
+  has_many :information_participations, dependent: :destroy
   has_many :information_pages, through: :information_participations, source: :information
-
-  has_many :requests
-
-  has_many :blog_participations, dependent: :destroy
   
   has_many :reviews, dependent: :destroy
   has_many :requests, dependent: :destroy
