@@ -2,6 +2,7 @@ class InformationPagesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :require_moderator, only: [:new, :create]
   before_action :require_editor_or_author, only: [:edit, :update]
+  before_action :require_admin, only: [:destroy]
     
   def index
     @search_term = params[:search]
@@ -19,6 +20,15 @@ class InformationPagesController < ApplicationController
   
   def new
     @information = Information.new
+  end
+
+  def destroy
+    @information = Information.find(params[:id])
+    @information.destroy
+    respond_to do |format|
+      format.html { redirect_to information_pages_url, notice: "Página de informacipon eliminada correctamente.", status: :see_other }
+      format.json { head :no_content }
+    end
   end
   
   def create
@@ -65,6 +75,12 @@ class InformationPagesController < ApplicationController
   unless participation&.editor_contribution? || participation&.autor_contribution? ||
          current_user&.admin?
     redirect_to root_path, alert: "No tienes permisos para acceder a esta sección."
+    end
+  end
+
+  def require_admin
+  unless current_user&.admin?
+    redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
     end
   end
 end

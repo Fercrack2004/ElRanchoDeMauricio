@@ -1,7 +1,7 @@
 {
   "Minitest": {
     "coverage": {
-      "/home/felipe/2025-1-grupo-32/test/controllers/blogs_controller_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/controllers/blogs_controller_test.rb": {
         "lines": [
           1,
           null,
@@ -12,7 +12,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/controllers/chat_rooms_controller_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/controllers/chat_rooms_controller_test.rb": {
         "lines": [
           1,
           null,
@@ -23,7 +23,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/controllers/information_pages_controller_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/controllers/information_pages_controller_test.rb": {
         "lines": [
           1,
           null,
@@ -34,7 +34,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/controllers/messages_controller_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/controllers/messages_controller_test.rb": {
         "lines": [
           1,
           null,
@@ -45,7 +45,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/controllers/render_controller_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/controllers/render_controller_test.rb": {
         "lines": [
           1,
           null,
@@ -57,7 +57,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/controllers/requests_controller_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/controllers/requests_controller_test.rb": {
         "lines": [
           1,
           null,
@@ -68,7 +68,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/controllers/reviews_controller_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/controllers/reviews_controller_test.rb": {
         "lines": [
           1,
           null,
@@ -83,7 +83,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/controllers/users_controller_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/controllers/users_controller_test.rb": {
         "lines": [
           1,
           null,
@@ -121,7 +121,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/models/blog_participation_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/models/blog_participation_test.rb": {
         "lines": [
           1,
           null,
@@ -132,7 +132,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/models/blog_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/models/blog_test.rb": {
         "lines": [
           1,
           null,
@@ -143,7 +143,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/models/chat_room_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/models/chat_room_test.rb": {
         "lines": [
           1,
           null,
@@ -154,7 +154,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/models/information_participation_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/models/information_participation_test.rb": {
         "lines": [
           1,
           null,
@@ -201,7 +201,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/models/information_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/models/information_test.rb": {
         "lines": [
           1,
           null,
@@ -225,48 +225,6 @@
           null,
           0,
           0,
-          null,
-          1,
-          0,
-          null,
-          null,
-          null,
-          null,
-          0,
-          0,
-          null,
-          null
-        ]
-      },
-      "/home/felipe/2025-1-grupo-32/test/models/message_test.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          1,
-          0,
-          0,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null,
-          null,
-          null,
-          0,
-          0,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null,
-          null,
-          null,
-          0,
-          0,
-          null,
           null,
           1,
           0,
@@ -280,7 +238,49 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/models/request_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/models/message_test.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          null,
+          null
+        ]
+      },
+      "/home/maurice/2025-1-grupo-32/test/models/request_test.rb": {
         "lines": [
           1,
           null,
@@ -302,7 +302,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/models/review_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/models/review_test.rb": {
         "lines": [
           1,
           null,
@@ -359,7 +359,7 @@
           null
         ]
       },
-      "/home/felipe/2025-1-grupo-32/test/models/user_test.rb": {
+      "/home/maurice/2025-1-grupo-32/test/models/user_test.rb": {
         "lines": [
           1,
           null,
@@ -402,6 +402,16 @@
           0,
           null,
           null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
           null,
           null,
           1,
@@ -435,6 +445,6 @@
         ]
       }
     },
-    "timestamp": 1747451036
+    "timestamp": 1747451538
   }
 }

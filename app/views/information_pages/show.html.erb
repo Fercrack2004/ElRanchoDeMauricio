@@ -23,4 +23,16 @@
     <% end %>
 <% end %>
 
+<% if current_user&.admin? %>
+      <%= button_to "Eliminar Información", information_path(@information), 
+          method: :delete, 
+          form: { 
+            data: { 
+              turbo: "false",  # ← Esto desactiva Turbo para este formulario
+              turbo_confirm: "¿Estás seguro de que quieres eliminar este página de información? Esta acción no se puede deshacer."
+            } 
+          }
+        =%>
+<% end %>
+
 

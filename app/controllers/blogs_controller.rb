@@ -2,6 +2,8 @@ class BlogsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :require_moderator, only: [:new, :create]
   before_action :require_editor_or_author, only: [:edit, :update]
+  before_action :require_admin, only: [:destroy]
+
   def index
     @search_term = params[:search]
     @blog = if @search_term.present?
@@ -75,4 +77,9 @@ class BlogsController < ApplicationController
     end
   end
 
+  def require_admin
+  unless current_user&.admin?
+    redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
+    end
+  end
 end
