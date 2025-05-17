@@ -45,6 +45,15 @@ class BlogsController < ApplicationController
       end
     end
   
+  def destroy
+    @blog = Blog.find(params[:id])
+    @blog.destroy
+    respond_to do |format|
+      format.html { redirect_to blogs_url, notice: "Blog eliminado correctamente.", status: :see_other }
+      format.json { head :no_content }
+    end
+  end
+  
     private
   
   def blog_params
@@ -65,4 +74,5 @@ class BlogsController < ApplicationController
     redirect_to root_path, alert: "No tienes permisos para acceder a esta sección."
     end
   end
+
 end

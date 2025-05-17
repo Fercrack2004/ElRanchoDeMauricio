@@ -4,8 +4,8 @@ class Blog < ApplicationRecord
 
   accepts_nested_attributes_for :blog_participations
 
-  has_many :requests, as: :requestable
-  has_many :reviews, as: :reviewable
+  has_many :requests, as: :requestable, dependent: :destroy
+  has_many :reviews, as: :reviewable, dependent: :destroy
   has_one :chat_room, as: :chatable, dependent: :destroy
 
     # Validaciones
