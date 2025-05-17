@@ -1,4 +1,6 @@
 class BlogsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :require_moderator, only: [:new, :create]
   def index
     @search_term = params[:search]
     @blog = if @search_term.present?
@@ -47,4 +49,10 @@ class BlogsController < ApplicationController
   def blog_params
     params.require(:blog).permit(:title, :public_type, :description, :cook_time)
   end
+
+  def require_moderator
+  unless current_user&.moderator? || current_user&.admin?
+    redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
+    end
   end
+end

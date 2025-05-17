@@ -1,5 +1,6 @@
 class InformationPagesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :require_moderator, only: [:new, :create]
     
   def index
     @search_term = params[:search]
@@ -50,4 +51,10 @@ class InformationPagesController < ApplicationController
   def information_params
     params.require(:information).permit(:title, :info_type, :description)
   end
+
+  def require_moderator
+  unless current_user&.moderator? || current_user&.admin?
+    redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
+    end
   end
+end
