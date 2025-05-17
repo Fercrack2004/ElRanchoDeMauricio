@@ -24,6 +24,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     sign_in user
 
     delete user_url(user)
-    assert_response :success
+
+    assert_response :redirect           
+    assert_redirected_to root_path      
+    assert_raises(ActiveRecord::RecordNotFound) do
+      User.find(user.id)    
+    end
   end
 end
