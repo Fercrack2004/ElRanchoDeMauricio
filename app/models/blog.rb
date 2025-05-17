@@ -9,7 +9,8 @@ class Blog < ApplicationRecord
   has_one :chat_room, as: :chatable, dependent: :destroy
 
     # Validaciones
-  validates :title, :public_type, :description, :cook_time, presence: true
+  validates :title, :public_type, :description,  presence: true
+  validates :cook_time, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
 
     
 end
