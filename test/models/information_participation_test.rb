@@ -6,15 +6,15 @@ class InformationParticipationTest < ActiveSupport::TestCase
     @information = information(:one) ### CAMBIAR POR EL PLURAL DE INFORMATION
   end 
 
-    test "no es válido sin contruibidor" do
-    participation = InformationParticipation.new(
-      user: @user,
-      information: @information,
-      contribution: nil
-    )
-    assert_not participation.valid?
-    assert_includes participation.errors[:contribution], "can't be blank"
-  end
+  test "no es válido sin contruibidor" do
+  participation = InformationParticipation.new(
+    user: @user,
+    information: @information,
+    contribution: nil
+  )
+  assert_not participation.valid?
+  assert_includes participation.errors[:contribution], "can't be blank"
+end
 
   
   test "no es válido sin información" do

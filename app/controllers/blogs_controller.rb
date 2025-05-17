@@ -63,13 +63,13 @@ class BlogsController < ApplicationController
   end
 
   def require_moderator
-  unless current_user&.moderator? || current_user&.admin?
-    redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
-    end
+    unless current_user&.moderator? || current_user&.admin?
+      redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
+      end
   end
 
   def require_editor_or_author
-  @blog = Blog.find(params[:id])
+    @blog = Blog.find(params[:id])
   participation = @blog.blog_participations.find_by(user_id: current_user.id)
   unless participation&.editor_contribution? || participation&.autor_contribution? ||
          current_user&.admin?
@@ -78,8 +78,8 @@ class BlogsController < ApplicationController
   end
 
   def require_admin
-  unless current_user&.admin?
-    redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
-    end
+    unless current_user&.admin?
+      redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
+      end
   end
 end

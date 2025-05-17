@@ -77,12 +77,12 @@ class RequestsController < ApplicationController
   end
 
   def require_author
-  participation = case @requestable
-  when Blog
-    @requestable.blog_participations.find_by(user_id: current_user.id)
-  when Information
-    @requestable.information_participations.find_by(user_id: current_user.id)
-  end
+    participation = case @requestable
+    when Blog
+      @requestable.blog_participations.find_by(user_id: current_user.id)
+    when Information
+      @requestable.information_participations.find_by(user_id: current_user.id)
+    end
 
   unless participation&.autor_contribution? ||
          current_user&.admin?

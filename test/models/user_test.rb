@@ -26,18 +26,18 @@ class UserTest < ActiveSupport::TestCase
     )
     assert user.valid?
   end
-    test "no permite crear usuario sin número de teléfono" do
-    user = User.new(
-      username: "sinphone",
-      email: "ejemplo@correo.com", 
-      password: "123456", 
-      phone_number: nil, 
-      role: "user",
-      password: "123456", 
-      password_confirmation: "123456")
-    assert_not user.valid?, "El usuario debería ser inválido sin número de teléfono"
-    assert_includes user.errors[:phone_number], "can't be blank"
-  end
+  test "no permite crear usuario sin número de teléfono" do
+  user = User.new(
+    username: "sinphone",
+    email: "ejemplo@correo.com", 
+    password: "123456", 
+    phone_number: nil, 
+    role: "user",
+    password: "123456", 
+    password_confirmation: "123456")
+  assert_not user.valid?, "El usuario debería ser inválido sin número de teléfono"
+  assert_includes user.errors[:phone_number], "can't be blank"
+end
 
   test "permite crear usuario con número de teléfono" do
     user = User.new(

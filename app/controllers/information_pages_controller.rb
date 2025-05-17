@@ -26,7 +26,8 @@ class InformationPagesController < ApplicationController
     @information = Information.find(params[:id])
     @information.destroy
     respond_to do |format|
-      format.html { redirect_to information_pages_url, notice: "Página de informacipon eliminada correctamente.", status: :see_other }
+      format.html {
+ redirect_to information_pages_url, notice: "Página de informacipon eliminada correctamente.", status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -64,13 +65,13 @@ class InformationPagesController < ApplicationController
   end
 
   def require_moderator
-  unless current_user&.moderator? || current_user&.admin?
-    redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
-    end
+    unless current_user&.moderator? || current_user&.admin?
+      redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
+      end
   end
 
   def require_editor_or_author
-  @information = Information.find(params[:id])
+    @information = Information.find(params[:id])
   participation = @information.information_participations.find_by(user_id: current_user.id)
   unless participation&.editor_contribution? || participation&.autor_contribution? ||
          current_user&.admin?
@@ -79,8 +80,8 @@ class InformationPagesController < ApplicationController
   end
 
   def require_admin
-  unless current_user&.admin?
-    redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
-    end
+    unless current_user&.admin?
+      redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
+      end
   end
 end

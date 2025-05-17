@@ -7,11 +7,11 @@ class MessageTest < ActiveSupport::TestCase
   end
 
   test "no es valido sin contenido" do
-      message = Message.new(
-      content: nil,
-      user: @user,
-      chat_room: @chat_room
-    )
+    message = Message.new(
+    content: nil,
+    user: @user,
+    chat_room: @chat_room
+  )
     assert_not message.valid?
     assert_includes message.errors[:content], "can't be blank"
   end
