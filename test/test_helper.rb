@@ -7,6 +7,10 @@ SimpleCov.start do
   add_group 'Controllers', 'app/controllers'
 end
 
+class ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+end
+
 module ActiveSupport
   class TestCase
     # Run tests in parallel with specified workers

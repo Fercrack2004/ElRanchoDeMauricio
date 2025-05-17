@@ -51,8 +51,8 @@
           null,
           1,
           1,
-          0,
-          0,
+          null,
+          null,
           null,
           null
         ]
@@ -75,6 +75,39 @@
           1,
           null,
           null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/2025-1-grupo-32/test/controllers/users_controller_test.rb": {
+        "lines": [
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          0,
           null,
           null
         ]
@@ -403,6 +436,6 @@
         ]
       }
     },
-    "timestamp": 1747380882
+    "timestamp": 1747448434
   }
 }
