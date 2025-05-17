@@ -1,6 +1,7 @@
 class BlogsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :require_moderator, only: [:new, :create]
+  before_action :require_editor_or_author, only: [:edit, :update]
   def index
     @search_term = params[:search]
     @blog = if @search_term.present?
@@ -53,6 +54,15 @@ class BlogsController < ApplicationController
   def require_moderator
   unless current_user&.moderator? || current_user&.admin?
     redirect_to root_path, alert: "No tienes permisos para realizar esta acción."
+    end
+  end
+
+  def require_editor_or_author
+  @blog = Blog.find(params[:id])
+  participation = @blog.blog_participations.find_by(user_id: current_user.id)
+  unless participation&.editor_contribution? || participation&.autor_contribution? ||
+         current_user&.admin?
+    redirect_to root_path, alert: "No tienes permisos para acceder a esta sección."
     end
   end
 end

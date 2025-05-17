@@ -1,6 +1,8 @@
 class RequestsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_requestable
+  before_action :require_author, only: [:index, :edit, :update]
+
   def index
     @requests = @requestable.requests
   end
@@ -74,4 +76,18 @@ class RequestsController < ApplicationController
     params.require(:request).permit(:description)
   end
 
+  def require_author
+  participation = case @requestable
+  when Blog
+    @requestable.blog_participations.find_by(user_id: current_user.id)
+  when Information
+    @requestable.information_participations.find_by(user_id: current_user.id)
+  end
+
+  unless participation&.autor_contribution? ||
+         current_user&.admin?
+    redirect_to root_path, alert: "No tienes permisos para acceder a esta sección."
+  end
+end
+  
 end
