@@ -4,6 +4,7 @@ one:
   title: MyString
   public_type: "{MyString}"
   description: "{MyString}"
+  cook_time: 30
 
 two:
   title: "{MyString}"
