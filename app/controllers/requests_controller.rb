@@ -1,7 +1,7 @@
 class RequestsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_requestable
-  before_action :require_author, only: [:index, :edit, :update]
+  before_action :require_author, only: [:index, :update]
 
   def index
     @requests = @requestable.requests
