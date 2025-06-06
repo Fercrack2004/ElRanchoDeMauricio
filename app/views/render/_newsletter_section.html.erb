@@ -1,0 +1,25 @@
+<%# app/views/render/_newsletter_section.html.erb %>
+
+<section class="bg-[linear-gradient(to_right,#991b1b,#b91c1c)] rounded-2xl p-8 md:p-12 text-white overflow-hidden relative">
+  <div class="absolute -right-20 -top-20 w-64 h-64 bg-white/10 rounded-full"></div>
+  <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-white/10 rounded-full"></div>
+  
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">¿Quieres recibir nuestras mejores recetas?</h2>
+    <p class="text-xl mb-8 max-w-2xl mx-auto">Suscríbete y recibe semanalmente recetas exclusivas en tu correo.</p>
+    
+    <%# --- INICIO DEL FORMULARIO DE RAILS --- %>
+    <%= form_with(model: Subscriber.new, class: "flex flex-col sm:flex-row gap-4 max-w-xl mx-auto") do |form| %>
+      <%= form.email_field :email, 
+          placeholder: "Tu correo electrónico", 
+          class: "flex-grow px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400 text-gray-800 placeholder-gray-400",
+          required: true %>
+      
+      <%= form.submit "Suscribirme", 
+          class: "bg-accent-600 hover:bg-accent-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors shadow-md hover:shadow-lg cursor-pointer" %>
+    <% end %>
+    <%# --- FIN DEL FORMULARIO DE RAILS --- %>
+    
+    <p class="text-sm mt-4 text-white/80">Nosotros también odiamos el spam. Nunca compartiremos tu correo.</p>
+  </div>
+</section>

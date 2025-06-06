@@ -10,11 +10,13 @@ Rails.application.routes.draw do
     sign_up: 'register',
     edit: 'edit_profile'
   }
-
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
   get 'render/index'
   get "up" => "rails/health#show", as: :rails_health_check
-
-  resources :users, only: [:index, :show, :destroy]
+  resources :subscribers, only: [:create]
+  resources :users, only: [:index, :show, :destroy, :edit, :update]
 
   resources :blogs do
     resources :reviews

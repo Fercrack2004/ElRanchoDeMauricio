@@ -1,6 +1,9 @@
 class RenderController < ApplicationController
   def index
     @search_term = params[:search]
+  @blogs = Blog.includes(:reviews).order(created_at: :desc).limit(6)
+
+  @informations = Information.order(created_at: :desc).limit(6)
     
     if @search_term.present?
       # Modo búsqueda like searching fr

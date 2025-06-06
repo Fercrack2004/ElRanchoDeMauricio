@@ -1,0 +1,21 @@
+<section class="mb-16">
+  <div class="flex justify-between items-center mb-8">
+    <h2 class="text-3xl font-serif font-bold text-primary-800">Consejos y Técnicas</h2>
+    <%= link_to information_pages_path, class: "text-primary-600 hover:text-primary-800 font-medium flex items-center group" do %>
+      <span>Ver todos</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+    <% end %>
+  </div>
+  
+  <% if @informations.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% @informations.each do |information| %>
+        <%= render 'information_pages/info_card', information: information %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-primary-50 border-l-4 border-primary-600 p-4 rounded-lg">
+      <p class="text-primary-700">Aún no hay consejos o técnicas publicadas.</p>
+    </div>
+  <% end %>
+</section>
