@@ -1,0 +1,14 @@
+<h2 class="text-xl font-bold mt-8 mb-4">Ingredientes</h2>
+<ul class="space-y-4">
+  <% blog.ingredients.each do |ingredient| %>
+    <li class="flex items-start space-x-4">
+      <% if ingredient.image.attached? %>
+        <%= image_tag ingredient.image.variant(resize_to_limit: [80, 80]), class: "rounded-md w-20 h-20 object-cover" %>
+      <% end %>
+      <div>
+        <p class="font-semibold"><%= ingredient.name %></p>
+        <p class="text-gray-600 text-sm">Cantidad: <%= ingredient.quantity %></p>
+      </div>
+    </li>
+  <% end %>
+</ul>
