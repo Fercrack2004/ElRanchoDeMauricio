@@ -1,6 +1,22 @@
 <h1><%= @information.title %></h1>
 <p><%= @information.description %></p>
 
+<!-- Índice -->
+<ul>
+  <% @information.sections.each do |section| %>
+    <li><a href="#section-<%= section.id %>"><%= section.title %></a></li>
+  <% end %>
+</ul>
+
+<!-- Contenido -->
+<% @information.sections.each do |section| %>
+  <h2 id="section-<%= section.id %>"><%= section.title %></h2>
+  <p><%= section.content %></p>
+  <% if section.image.attached? %>
+    <%= image_tag section.image %>
+  <% end %>
+<% end %>
+
 <p><%= link_to "Ver Reviews", information_reviews_path(@information), class: "btn btn-outline-secondary", data: { turbo: false } %></p>
 <p><%= link_to "Dejar Review", new_information_review_path(@information), class: "btn btn-primary", data: { turbo: false } %></p>
 
@@ -14,7 +30,7 @@
 <% end %>
 
 <% if participation&.autor_contribution? || participation&.editor_contribution? %>
-<p><%= link_to "Editar Informacion", edit_information_path(@information), data: { turbo: false } %></p>
+<p><%= link_to "Editar Información", edit_information_path(@information), data: { turbo: false } %></p>
 <% end %>
 
 <% if @information.chat_room.present? %>

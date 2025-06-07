@@ -3,23 +3,80 @@
 <%= form_with model: @information, local: true do |form| %>
 
   <div>
-    <%= form.label :title %>
+    <%= form.label :title, "Título" %><br>
     <%= form.text_field :title %>
   </div>
 
   <div>
-    <%= form.label :info_type %>
-    <%= form.text_area :info_type %>
+    <%= form.label :info_type, "Tipo de Información" %><br>
+    <%= form.select :info_type, ["General", "Importante", "Privada"] %> <!-- Puedes ajustar estos valores -->
   </div>
 
-
   <div>
-    <%= form.label :description %>
+    <%= form.label :description, "Descripción" %><br>
     <%= form.text_area :description %>
   </div>
 
+  <h2>Secciones</h2>
+  <div id="sections-wrapper">
+    <%= form.fields_for :sections do |section_form| %>
+      <div class="nested-fields">
+        <%= section_form.label :title, "Título de la sección" %><br>
+        <%= section_form.text_field :title %><br>
+
+        <%= section_form.label :content, "Contenido" %><br>
+        <%= section_form.text_area :content %><br>
+
+        <%= section_form.label :image, "Imagen (opcional)" %><br>
+        <%= section_form.file_field :image %><br>
+
+        <%= section_form.hidden_field :_destroy %>
+        <button type="button" onclick="removeFields(this)">Eliminar sección</button>
+      </div>
+    <% end %>
+  </div>
+
+  <button type="button" onclick="addSection()">Añadir sección</button>
+
   <div>
-    <%= form.submit "Actualizar Informacion" %>
+    <%= form.submit "Aplicar cambios" %>
   </div>
 <% end %>
-<%= link_to "Volver", root_path, class: "btn btn-secondary mt-3" %>
+
+<!-- Templates ocultos -->
+<template id="section-template">
+  <div class="nested-fields">
+    <label>Título de la sección</label><br>
+    <input type="text" name="information[sections_attributes][new_SECTION][title]" /><br>
+
+    <label>Contenido</label><br>
+    <textarea name="information[sections_attributes][new_SECTION][content]"></textarea><br>
+
+    <label>Imagen (opcional)</label><br>
+    <input type="file" name="information[sections_attributes][new_SECTION][image]" /><br>
+
+    <input type="hidden" name="information[sections_attributes][new_SECTION][_destroy]" value="false" />
+    <button type="button" onclick="removeFields(this)">Eliminar sección</button>
+  </div>
+</template>
+
+<script>
+  function removeFields(button) {
+    const field = button.closest(".nested-fields")
+    const destroyInput = field.querySelector("input[name*='_destroy']")
+    if (destroyInput) {
+      destroyInput.value = "1"
+      field.style.display = "none"
+    } else {
+      field.remove()
+    }
+  }
+
+  function addSection() {
+    const timestamp = new Date().getTime()
+    const template = document.getElementById("section-template").innerHTML.replace(/new_SECTION/g, timestamp)
+    document.getElementById("sections-wrapper").insertAdjacentHTML("beforeend", template)
+  }
+</script>
+
+<%= link_to "Volver", information_path, class: "btn btn-secondary mt-3" %>

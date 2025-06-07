@@ -4,6 +4,12 @@ class Blog < ApplicationRecord
 
   accepts_nested_attributes_for :blog_participations
 
+  has_many :ingredients, dependent: :destroy
+  has_many :steps, dependent: :destroy
+
+  accepts_nested_attributes_for :ingredients, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :steps, allow_destroy: true, reject_if: :all_blank
+
   has_many :requests, as: :requestable, dependent: :destroy
   has_many :reviews, as: :reviewable, dependent: :destroy
   has_one :chat_room, as: :chatable, dependent: :destroy

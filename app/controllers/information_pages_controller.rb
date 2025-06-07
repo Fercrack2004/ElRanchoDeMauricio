@@ -61,7 +61,9 @@ class InformationPagesController < ApplicationController
     private
   
   def information_params
-    params.require(:information).permit(:title, :info_type, :description)
+    params.require(:information).permit(:title, :info_type, :description,
+    sections_attributes: [:id, :title, :content, :image, :_destroy]
+    )
   end
 
   def require_moderator

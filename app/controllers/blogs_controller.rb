@@ -37,6 +37,8 @@ class BlogsController < ApplicationController
   
   def edit
     @blog = Blog.find(params[:id])
+    @blog.ingredients.build if @blog.ingredients.empty?
+    @blog.steps.build if @blog.steps.empty?
   end
 
   def update
@@ -59,7 +61,10 @@ class BlogsController < ApplicationController
     private
   
   def blog_params
-    params.require(:blog).permit(:title, :public_type, :description, :cook_time)
+    params.require(:blog).permit(:title, :public_type, :description, :cook_time,
+    ingredients_attributes: [:id, :name, :quantity, :image, :_destroy],
+    steps_attributes: [:id, :description, :step_num, :image, :_destroy]
+  )
   end
 
   def require_moderator
