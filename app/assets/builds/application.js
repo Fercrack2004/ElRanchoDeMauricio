@@ -8557,6 +8557,23 @@
       }, 500);
     }
   }
+  function initializeUIComponents() {
+    const crearBtn = document.getElementById("crearBtn");
+    const crearMenu = document.getElementById("crearMenu");
+    if (crearBtn && crearMenu) {
+      crearBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        crearMenu.classList.toggle("hidden");
+      });
+    }
+    document.addEventListener("click", (event) => {
+      if (crearMenu && !crearMenu.classList.contains("hidden") && !crearBtn.contains(event.target)) {
+        crearMenu.classList.add("hidden");
+      }
+    });
+  }
+  document.addEventListener("turbo:load", initializeUIComponents);
+  document.addEventListener("DOMContentLoaded", initializeUIComponents);
   document.addEventListener("DOMContentLoaded", initializeFontObserver);
   document.addEventListener("turbo:load", initializeFontObserver);
 })();
