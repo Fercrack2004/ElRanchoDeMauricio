@@ -2,9 +2,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+  // Añadimos los targets para las secciones
   static targets = [
     "ingredientsContainer", "ingredientTemplate",
-    "stepsContainer",       "stepTemplate"
+    "stepsContainer",       "stepTemplate",
+    "sectionsContainer",    "sectionTemplate" // <-- NUEVOS TARGETS
   ]
 
   addIngredient(event) {
@@ -17,6 +19,13 @@ export default class extends Controller {
     event.preventDefault()
     let content = this.stepTemplateTarget.innerHTML.replace(/NEW_RECORD/g, new Date().getTime())
     this.stepsContainerTarget.insertAdjacentHTML('beforeend', content)
+  }
+
+  // ¡NUEVA FUNCIÓN!
+  addSection(event) {
+    event.preventDefault()
+    let content = this.sectionTemplateTarget.innerHTML.replace(/NEW_RECORD/g, new Date().getTime())
+    this.sectionsContainerTarget.insertAdjacentHTML('beforeend', content)
   }
 
   remove(event) {

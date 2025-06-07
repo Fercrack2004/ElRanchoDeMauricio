@@ -1,0 +1,8 @@
+<div class="relative h-72 md:h-96 w-full overflow-hidden">
+  <% if information.card_image.attached? %>
+    <%= image_tag information.card_image.variant(resize_to_fill: [1200, 600]), alt: information.title, class: "w-full h-full object-cover" %>
+  <% else %>
+    <img src="https://source.unsplash.com/random/1200x600/?library,<%= information.title.parameterize %>" alt="<%= information.title %>" class="w-full h-full object-cover" />
+  <% end %>
+  <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>

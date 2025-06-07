@@ -1,136 +1,87 @@
-<h1>Editar Blog</h1>
+<div class="bg-gray-50 py-12">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
+      
+      <h1 class="text-4xl font-serif font-bold text-primary-800 mb-2">Editar Receta</h1>
+      <p class="text-gray-600 mb-8">Ajusta los detalles de tu creación culinaria.</p>
 
-<%= form_with model: @blog, local: true do |form| %>
+      <%# Conectamos el formulario a nuestro controlador Stimulus "nested-form" %>
+      <%= form_with model: @blog, html: { data: { controller: "nested-form" } } do |form| %>
+        <%= render "devise/shared/error_messages", resource: @blog %>
 
-  <div>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-  </div>
-
-  <div>
-    <%= form.label :public_type %><br>
-    <%= form.select :public_type, ["Público", "Privado"] %>
-  </div>
-
-  <div>
-    <%= form.label :description %><br>
-    <%= form.text_area :description %>
-  </div>
-
-  <div>
-    <%= form.label :cook_time %><br>
-    <%= form.text_field :cook_time %>
-  </div>
-
-  <h2>Ingredientes</h2>
-  <div id="ingredients-wrapper">
-    <%= form.fields_for :ingredients do |ingredient_form| %>
-      <div class="nested-fields">
-        <%= ingredient_form.label :name %>
-        <%= ingredient_form.text_field :name %>
-
-        <%= ingredient_form.label :quantity %>
-        <%= ingredient_form.number_field :quantity %>
-
-        <%= ingredient_form.label :image, "Imagen (opcional)" %><br>
-        <%= ingredient_form.file_field :image %><br>
-
-        <% if ingredient_form.object.image.attached? %>
+        <%# --- SECCIÓN 1: INFORMACIÓN BÁSICA --- %>
+        <div class="space-y-6">
           <div>
-            Imagen actual: <%= image_tag ingredient_form.object.image.variant(resize_to_limit: [150, 150]) %>
+            <%= form.label :title, "Título de la Receta", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.text_field :title, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500" %>
           </div>
-        <% end %>
-
-        <%= ingredient_form.hidden_field :_destroy %>
-        <button type="button" onclick="removeFields(this)">Eliminar</button>
-      </div>
-    <% end %>
-  </div>
-  <button type="button" onclick="addIngredient()">Añadir ingrediente</button>
-
-  <h2>Pasos</h2>
-  <div id="steps-wrapper">
-    <%= form.fields_for :steps do |step_form| %>
-      <div class="nested-fields">
-        <%= step_form.label :description %>
-        <%= step_form.text_area :description %>
-
-        <%= step_form.label :step_num %>
-        <%= step_form.number_field :step_num %>
-
-        <%= step_form.label :image, "Imagen (opcional)" %><br>
-        <%= step_form.file_field :image %><br>
-
-        <% if step_form.object.image.attached? %>
           <div>
-            Imagen actual: <%= image_tag step_form.object.image.variant(resize_to_limit: [150, 150]) %>
+            <%= form.label :card_image, "Cambiar Imagen de Portada", class: "block text-gray-700 font-semibold mb-2" %>
+            <% if @blog.card_image.attached? %>
+              <div class="flex items-center gap-4 mb-2">
+                <p class="text-sm text-gray-500">Imagen actual:</p>
+                <%= image_tag @blog.card_image.variant(resize_to_limit: [100, 100]), class: "rounded-lg" %>
+              </div>
+            <% end %>
+            <%= form.file_field :card_image, class: "w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-200" %>
           </div>
-        <% end %>
+          <div>
+            <%= form.label :description, "Descripción Corta", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.text_area :description, rows: 4, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500" %>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            <div>
+              <%= form.label :cook_time, "Tiempo de Cocina (minutos)", class: "block text-gray-700 font-semibold mb-2" %>
+              <%= form.number_field :cook_time, class: "w-full px-4 py-2 border border-gray-300 rounded-lg" %>
+            </div>
+            <div>
+              <%= form.label :public_type, "Visibilidad", class: "block text-gray-700 font-semibold mb-2" %>
+              <%= form.select :public_type, ["Público", "Privado"], {}, {class: "w-full px-4 py-2 border border-gray-300 rounded-lg bg-white"} %>
+            </div>
+          </div>
+        </div>
 
-        <%= step_form.hidden_field :_destroy %>
-        <button type="button" onclick="removeFields(this)">Eliminar</button>
-      </div>
-    <% end %>
+        <hr class="my-10">
+
+        <%# --- SECCIÓN 2: INGREDIENTES --- %>
+        <div>
+          <h2 class="text-2xl font-serif font-bold text-primary-800 mb-4">Ingredientes</h2>
+          <div data-nested-form-target="ingredientsContainer">
+            <%= form.fields_for :ingredients do |ingredient_form| %>
+              <%= render 'ingredient_fields', form: ingredient_form %>
+            <% end %>
+          </div>
+          <template data-nested-form-target="ingredientTemplate">
+            <%= form.fields_for :ingredients, Ingredient.new, child_index: 'NEW_RECORD' do |ingredient_form| %>
+              <%= render 'ingredient_fields', form: ingredient_form %>
+            <% end %>
+          </template>
+          <button type="button" data-action="click->nested-form#addIngredient" class="mt-4 bg-secondary-600 hover:bg-secondary-700 text-white px-4 py-2 rounded-lg font-semibold text-sm">Añadir Ingrediente</button>
+        </div>
+        
+        <hr class="my-10">
+
+        <%# --- SECCIÓN 3: PASOS --- %>
+        <div>
+          <h2 class="text-2xl font-serif font-bold text-primary-800 mb-4">Pasos</h2>
+          <div data-nested-form-target="stepsContainer">
+            <%= form.fields_for :steps do |step_form| %>
+              <%= render 'step_fields', form: step_form %>
+            <% end %>
+          </template>
+          <template data-nested-form-target="stepTemplate">
+            <%= form.fields_for :steps, Step.new, child_index: 'NEW_RECORD' do |step_form| %>
+              <%= render 'step_fields', form: step_form %>
+            <% end %>
+          </template>
+          <button type="button" data-action="click->nested-form#addStep" class="mt-4 bg-secondary-600 hover:bg-secondary-700 text-white px-4 py-2 rounded-lg font-semibold text-sm">Añadir Paso</button>
+        </div>
+
+        <div class="mt-12 flex justify-between items-center">
+          <%= link_to "Volver sin guardar", blog_path(@blog), class: "text-gray-600 hover:text-primary-700" %>
+          <%= form.submit "Guardar Cambios", class: "bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg text-lg font-semibold" %>
+        </div>
+      <% end %>
+    </div>
   </div>
-  <button type="button" onclick="addStep()">Añadir paso</button>
-
-  <div>
-    <%= form.submit "Aplicar cambios" %>
-  </div>
-<% end %>
-
-<!-- Templates ocultos -->
-<template id="ingredient-template">
-  <div class="nested-fields">
-    <label>Nombre</label>
-    <input type="text" name="blog[ingredients_attributes][new_INGREDIENT][name]" />
-
-    <label>Cantidad</label>
-    <input type="number" name="blog[ingredients_attributes][new_INGREDIENT][quantity]" />
-
-    <label>Imagen (opcional)</label>
-    <input type="file" name="blog[ingredients_attributes][new_INGREDIENT][image]" />
-
-    <input type="hidden" name="blog[ingredients_attributes][new_INGREDIENT][_destroy]" value="false" />
-    <button type="button" onclick="removeFields(this)">Eliminar</button>
-  </div>
-</template>
-
-<template id="step-template">
-  <div class="nested-fields">
-    <label>Descripción</label>
-    <textarea name="blog[steps_attributes][new_STEP][description]"></textarea>
-
-    <label>Número</label>
-    <input type="number" name="blog[steps_attributes][new_STEP][step_num]" />
-
-    <label>Imagen (opcional)</label>
-    <input type="file" name="blog[steps_attributes][new_STEP][image]" />
-
-    <input type="hidden" name="blog[steps_attributes][new_STEP][_destroy]" value="false" />
-    <button type="button" onclick="removeFields(this)">Eliminar</button>
-  </div>
-</template>
-
-<!-- JavaScript inline -->
-<script>
-  function removeFields(button) {
-    const field = button.closest(".nested-fields")
-    field.querySelector("input[name*='_destroy']").value = "1"
-    field.style.display = "none"
-  }
-
-  function addIngredient() {
-    const timestamp = new Date().getTime()
-    const template = document.getElementById("ingredient-template").innerHTML.replace(/new_INGREDIENT/g, timestamp)
-    document.getElementById("ingredients-wrapper").insertAdjacentHTML("beforeend", template)
-  }
-
-  function addStep() {
-    const timestamp = new Date().getTime()
-    const template = document.getElementById("step-template").innerHTML.replace(/new_STEP/g, timestamp)
-    document.getElementById("steps-wrapper").insertAdjacentHTML("beforeend", template)
-  }
-</script>
-
-<%= link_to "Volver", blog_path, class: "btn btn-secondary mt-3" %>
+</div>
