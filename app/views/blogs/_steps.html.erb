@@ -1,0 +1,11 @@
+<h2 class="text-xl font-bold mt-8 mb-4">Pasos</h2>
+<ol class="space-y-6 list-decimal list-inside">
+  <% blog.steps.order(:step_num).each do |step| %>
+    <li>
+      <div class="mb-2 text-gray-800"><%= step.description %></div>
+      <% if step.image.attached? %>
+        <%= image_tag step.image.variant(resize_to_limit: [300, 300]), class: "rounded-md mt-2" %>
+      <% end %>
+    </li>
+  <% end %>
+</ol>

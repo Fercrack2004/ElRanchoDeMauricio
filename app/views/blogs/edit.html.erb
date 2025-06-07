@@ -3,12 +3,17 @@
 <%= form_with model: @blog, local: true do |form| %>
 
   <div>
-    <%= form.label :title %>
+    <%= form.label :title %><br>
     <%= form.text_field :title %>
   </div>
 
   <div>
-    <%= form.label :description %>
+    <%= form.label :public_type %><br>
+    <%= form.select :public_type, ["Público", "Privado"] %>
+  </div>
+
+  <div>
+    <%= form.label :description %><br>
     <%= form.text_area :description %>
   </div>
 
@@ -17,7 +22,115 @@
     <%= form.text_field :cook_time %>
   </div>
 
+  <h2>Ingredientes</h2>
+  <div id="ingredients-wrapper">
+    <%= form.fields_for :ingredients do |ingredient_form| %>
+      <div class="nested-fields">
+        <%= ingredient_form.label :name %>
+        <%= ingredient_form.text_field :name %>
+
+        <%= ingredient_form.label :quantity %>
+        <%= ingredient_form.number_field :quantity %>
+
+        <%= ingredient_form.label :image, "Imagen (opcional)" %><br>
+        <%= ingredient_form.file_field :image %><br>
+
+        <% if ingredient_form.object.image.attached? %>
+          <div>
+            Imagen actual: <%= image_tag ingredient_form.object.image.variant(resize_to_limit: [150, 150]) %>
+          </div>
+        <% end %>
+
+        <%= ingredient_form.hidden_field :_destroy %>
+        <button type="button" onclick="removeFields(this)">Eliminar</button>
+      </div>
+    <% end %>
+  </div>
+  <button type="button" onclick="addIngredient()">Añadir ingrediente</button>
+
+  <h2>Pasos</h2>
+  <div id="steps-wrapper">
+    <%= form.fields_for :steps do |step_form| %>
+      <div class="nested-fields">
+        <%= step_form.label :description %>
+        <%= step_form.text_area :description %>
+
+        <%= step_form.label :step_num %>
+        <%= step_form.number_field :step_num %>
+
+        <%= step_form.label :image, "Imagen (opcional)" %><br>
+        <%= step_form.file_field :image %><br>
+
+        <% if step_form.object.image.attached? %>
+          <div>
+            Imagen actual: <%= image_tag step_form.object.image.variant(resize_to_limit: [150, 150]) %>
+          </div>
+        <% end %>
+
+        <%= step_form.hidden_field :_destroy %>
+        <button type="button" onclick="removeFields(this)">Eliminar</button>
+      </div>
+    <% end %>
+  </div>
+  <button type="button" onclick="addStep()">Añadir paso</button>
+
   <div>
-    <%= form.submit "Actualizar Blog" %>
+    <%= form.submit "Aplicar cambios" %>
   </div>
 <% end %>
+
+<!-- Templates ocultos -->
+<template id="ingredient-template">
+  <div class="nested-fields">
+    <label>Nombre</label>
+    <input type="text" name="blog[ingredients_attributes][new_INGREDIENT][name]" />
+
+    <label>Cantidad</label>
+    <input type="number" name="blog[ingredients_attributes][new_INGREDIENT][quantity]" />
+
+    <label>Imagen (opcional)</label>
+    <input type="file" name="blog[ingredients_attributes][new_INGREDIENT][image]" />
+
+    <input type="hidden" name="blog[ingredients_attributes][new_INGREDIENT][_destroy]" value="false" />
+    <button type="button" onclick="removeFields(this)">Eliminar</button>
+  </div>
+</template>
+
+<template id="step-template">
+  <div class="nested-fields">
+    <label>Descripción</label>
+    <textarea name="blog[steps_attributes][new_STEP][description]"></textarea>
+
+    <label>Número</label>
+    <input type="number" name="blog[steps_attributes][new_STEP][step_num]" />
+
+    <label>Imagen (opcional)</label>
+    <input type="file" name="blog[steps_attributes][new_STEP][image]" />
+
+    <input type="hidden" name="blog[steps_attributes][new_STEP][_destroy]" value="false" />
+    <button type="button" onclick="removeFields(this)">Eliminar</button>
+  </div>
+</template>
+
+<!-- JavaScript inline -->
+<script>
+  function removeFields(button) {
+    const field = button.closest(".nested-fields")
+    field.querySelector("input[name*='_destroy']").value = "1"
+    field.style.display = "none"
+  }
+
+  function addIngredient() {
+    const timestamp = new Date().getTime()
+    const template = document.getElementById("ingredient-template").innerHTML.replace(/new_INGREDIENT/g, timestamp)
+    document.getElementById("ingredients-wrapper").insertAdjacentHTML("beforeend", template)
+  }
+
+  function addStep() {
+    const timestamp = new Date().getTime()
+    const template = document.getElementById("step-template").innerHTML.replace(/new_STEP/g, timestamp)
+    document.getElementById("steps-wrapper").insertAdjacentHTML("beforeend", template)
+  }
+</script>
+
+<%= link_to "Volver", blog_path, class: "btn btn-secondary mt-3" %>

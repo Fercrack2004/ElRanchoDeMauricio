@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_06_151714) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_07_165056) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -89,6 +89,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_06_151714) do
     t.index ["user_id"], name: "index_information_participations_on_user_id"
   end
 
+  create_table "ingredients", force: :cascade do |t|
+    t.bigint "blog_id", null: false
+    t.string "name"
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blog_id"], name: "index_ingredients_on_blog_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "content"
     t.bigint "user_id", null: false
@@ -123,6 +132,25 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_06_151714) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
+  create_table "sections", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.integer "position"
+    t.bigint "information_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["information_id"], name: "index_sections_on_information_id"
+  end
+
+  create_table "steps", force: :cascade do |t|
+    t.bigint "blog_id", null: false
+    t.text "description"
+    t.integer "step_num"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blog_id"], name: "index_steps_on_blog_id"
+  end
+
   create_table "subscribers", force: :cascade do |t|
     t.string "email"
     t.datetime "created_at", null: false
@@ -153,8 +181,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_06_151714) do
   add_foreign_key "blog_participations", "users"
   add_foreign_key "information_participations", "information_pages"
   add_foreign_key "information_participations", "users"
+  add_foreign_key "ingredients", "blogs"
   add_foreign_key "messages", "chat_rooms"
   add_foreign_key "messages", "users"
   add_foreign_key "requests", "users"
   add_foreign_key "reviews", "users"
+  add_foreign_key "sections", "information_pages"
+  add_foreign_key "steps", "blogs"
 end
