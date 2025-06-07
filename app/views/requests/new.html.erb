@@ -1,14 +1,41 @@
 <% if @requestable.nil? %>
-  <p>Page not found!</p>
-<% else %>
-    <h2>Dejar una Solicitud para editar "<%= @requestable.title %>"</h2>
-
-    <%= form_with(model: [@requestable, @request]) do |form| %>
-    <div class="mb-3">
-        <%= form.label :description %>
-        <%= form.text_area :description, class: "form-control" %>
+  <div class="bg-gray-50 py-12">
+    <div class="container mx-auto px-4">
+      <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12 text-center">
+        <h1 class="text-2xl font-bold text-red-600">¡Página no encontrada!</h1>
+        <p class="text-gray-600 mt-2">No se pudo encontrar el recurso solicitado.</p>
+      </div>
     </div>
+  </div>
+<% else %>
 
-    <%= form.submit "Send Request", class: "btn btn-success" %>
+  <div class="mb-8">
+    <%= link_to polymorphic_path(@requestable), class: "inline-flex items-center group text-primary-600 hover:text-primary-800 transition-colors duration-200" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      <span class="text-lg font-medium">Volver a <%= @requestable.title %></span>
     <% end %>
+  </div>
+
+  <div class="bg-gray-50 py-12">
+    <div class="container mx-auto px-4">
+      <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
+        
+        <h1 class="text-3xl font-serif font-bold text-primary-800 mb-4 text-center">Dejar una Solicitud</h1>
+        <p class="text-gray-600 text-center mb-8">Solicita permiso para editar "<strong><%= @requestable.title %></strong>".</p>
+
+        <%= form_with(model: [@requestable, @request]) do |form| %>
+          <div class="mb-6">
+            <%= form.label :description, "Descripción de la solicitud", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.text_area :description, rows: 5, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 resize-none" %>
+          </div>
+
+          <div class="text-right">
+            <%= form.submit "Enviar Solicitud", class: "bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold shadow hover:shadow-md transition" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <% end %>

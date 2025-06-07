@@ -68,11 +68,7 @@ class BlogsController < ApplicationController
     private
   
   def blog_params
-<<<<<<< HEAD
-    params.require(:blog).permit(:title, :public_type, :description, :cook_time,
-=======
     params.require(:blog).permit(:title, :public_type, :description, :cook_time, :card_image,
->>>>>>> origin/Fercrack2004
     ingredients_attributes: [:id, :name, :quantity, :image, :_destroy],
     steps_attributes: [:id, :description, :step_num, :image, :_destroy]
   )
