@@ -1,0 +1,28 @@
+<%# app/views/blogs/_step_fields.html.erb %>
+<div class="nested-fields border-t border-gray-200 pt-4 mt-4" data-new-record="<%= form.object.new_record? %>">
+  <div class="flex items-start gap-4">
+    
+    <%# Campo para el número del paso (ahora visible) %>
+    <div>
+      <%= form.label :step_num, "Paso N°", class: "text-sm font-medium sr-only" %>
+      <%= form.number_field :step_num, in: 1...100, class: "w-20 px-3 py-2 border border-gray-300 rounded-md", placeholder: "#", required: true %>
+    </div>
+
+    <%# Campo para la descripción del paso %>
+    <div class="flex-grow">
+      <%= form.label :description, "Descripción del Paso", class: "text-sm font-medium sr-only" %>
+      <%= form.text_area :description, rows: 3, class: "w-full px-3 py-2 border border-gray-300 rounded-md", placeholder: "Descripción del paso...", required: true %>
+    </div>
+    
+    <%# Botón para eliminar %>
+    <div>
+      <a href="#" data-action="click->nested-form#remove" class="text-red-500 hover:text-red-700 text-sm font-medium">Eliminar</a>
+    </div>
+  </div>
+  <div class="mt-4">
+    <%= form.label :image, "Imagen del Paso (Opcional)", class: "text-sm font-medium text-gray-700" %>
+    <%= form.file_field :image, class: "w-full mt-1 text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-200" %>
+  </div>
+
+  <%= form.hidden_field :_destroy %>
+</div>

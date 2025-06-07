@@ -1,21 +1,32 @@
-<h1>Blogs</h1>
-<% @blog.each do |blog| %>
-    <div class="card mb-3">
-      <div class="card-body">
-        <h5 class="card-title"><%= blog.title %></h5>
-        <p class="card-text"><strong>Descripción:</strong> <%= blog.description %></p>
-
-        <% autor = blog.blog_participations.find_by(contribution: :autor)&.user %>
-        <p class="card-text"><strong>Autor:</strong> <%= autor&.email || "Desconocido" %></p>
-
-        <p class="card-text"><strong>Fecha de creación:</strong> <%= blog.created_at.strftime("%d/%m/%Y %H:%M") %></p>
-
-        <% contributors = blog.blog_participations.where.not(contribution: :autor).includes(:user) %>
-        <% if contributors.any? %>
-          <p class="card-text"><strong>Colaboradores:</strong>
-            <%= contributors.map { |bp| bp.user.email }.join(", ") %>
-          </p>
-        <% end %>
-      </div>
+<%# app/views/blogs/index.html.erb %>
+<div class="bg-gray-50">
+  
+  <%# --- Cabecera de la Sección --- %>
+  <div class="bg-white border-b border-gray-200">
+    <div class="container mx-auto px-4 py-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-serif font-bold text-primary-800">Nuestro Rincón de Recetas</h1>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Explora nuestra colección de recetas, consejos y técnicas culinarias compartidas por nuestra vibrante comunidad.</p>
     </div>
-  <% end %>
+  </div>
+
+  <%# --- Cuadrícula de Blogs --- %>
+  <div class="container mx-auto px-4 py-12">
+    <% if @blogs.any? %>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <%# Iteramos sobre la variable de instancia @blogs (en plural) %>
+        <% @blogs.each do |blog| %>
+          <%# Renderizamos el parcial de la tarjeta para cada blog, manteniendo el código limpio %>
+          <%= render 'blogs/blog_card', blog: blog %>
+        <% end %>
+
+      </div>
+    <% else %>
+      <div class="text-center py-16">
+        <p class="text-gray-500">Aún no hay blogs publicados. ¡Sé el primero en compartir una receta!</p>
+        <%= link_to "Crear Nuevo Blog", new_blog_path, class: "mt-4 inline-block bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors shadow-md" %>
+      </div>
+    <% end %>
+  </div>
+
+</div>

@@ -1,4 +1,3 @@
-<%# app/views/layouts/_navbar.html.erb %>
 <nav class="bg-[linear-gradient(to_right,#991b1b,#b91c1c)] text-white shadow-lg sticky top-0 z-50">
   <div class="container mx-auto px-4">
     <div class="flex justify-between items-center py-3">
@@ -20,15 +19,18 @@
         <div class="flex items-center space-x-4">
           <% if user_signed_in? %>
 
-            <%# --- INICIO: NUEVO MENÚ DESPLEGABLE 'CREAR' (SOLO PARA MODS/ADMINS) --- %>
-            <% if current_user.user? || current_user.moderator? %>
-              <div class="relative">
-                <button id="crearBtn" class="bg-secondary-600 hover:bg-secondary-700 text-white px-4 py-2 rounded-full font-semibold transition-all flex items-center space-x-2 shadow-md hover:shadow-lg">
+            <%# --- INICIO: MENÚ DESPLEGABLE 'CREAR' (CONECTADO A STIMULUS) --- %>
+            <% if current_user.admin? || current_user.moderator? %>
+              <%# 1. Conectamos este div a nuestro nuevo controlador "dropdown" %>
+              <div class="relative" data-controller="dropdown">
+                <%# 2. El botón ahora ejecuta la acción "toggle" del controlador %>
+                <button data-action="click->dropdown#toggle" class="bg-secondary-600 hover:bg-secondary-700 text-white px-4 py-2 rounded-full font-semibold transition-all flex items-center space-x-2 shadow-md hover:shadow-lg">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
                   <span>Crear</span>
                 </button>
                 
-                <ul id="crearMenu" class="hidden absolute right-0 mt-2 w-52 bg-white rounded-lg shadow-xl text-gray-800 z-10 overflow-hidden">
+                <%# 3. La lista "ul" es ahora el "objetivo" llamado "menu" %>
+                <ul class="hidden absolute right-0 mt-2 w-52 bg-white rounded-lg shadow-xl text-gray-800 z-10 overflow-hidden" data-dropdown-target="menu">
                   <li>
                     <%= link_to new_blog_path, class: "block px-4 py-3 hover:bg-secondary-50 transition-colors flex items-center space-x-2" do %>
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
@@ -57,9 +59,8 @@
               <span class="font-semibold group-hover:text-accent-400 transition-colors"><%= current_user.username || current_user.email %></span>
             <% end %>
 
-            <%= button_to destroy_user_session_path, method: :delete, class: "bg-accent-600 hover:bg-accent-700 text-white px-3 py-1.5 rounded-full font-semibold text-sm transition-all" do %>
-              <span>Cerrar Sesión</span>
-            <% end %>
+            <%= button_to "Cerrar Sesión", destroy_user_session_path, method: :delete, class: "bg-accent-600 hover:bg-accent-700 text-white px-3 py-1.5 rounded-full font-semibold text-sm transition-all" %>
+          
           <% else %>
             <%= link_to "Iniciar Sesión", new_user_session_path, class: "font-semibold hover:text-accent-400 transition-colors" %>
             <%= link_to "Registrarse", new_user_registration_path, class: "bg-white text-primary-800 px-4 py-2 rounded-full font-semibold hover:bg-primary-100 transition-all shadow-md" %>
