@@ -1,5 +1,5 @@
 class SubscriberMailer < ApplicationMailer
-  default from: 'noreply@elranchodemauricio.com'
+  default from: 'elranchodemauricio1@gmail.com'
 
   def welcome_email
     @subscriber = params[:subscriber]
