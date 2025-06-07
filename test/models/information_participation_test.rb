@@ -16,6 +16,16 @@ class InformationParticipationTest < ActiveSupport::TestCase
     assert_includes participation.errors[:contribution], "can't be blank"
   end
 
+  test "no es válido sin contribution valido" do
+    assert_raises ArgumentError do 
+      InformationParticipation.new(
+      user: @user,
+      information: @information,
+      contribution: 3
+    )
+    end
+  end
+
   
   test "no es válido sin información" do
     participation = InformationParticipation.new(

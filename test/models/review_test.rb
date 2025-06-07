@@ -6,6 +6,29 @@ class ReviewTest < ActiveSupport::TestCase
     @reviewable = blogs(:one) 
   end
 
+  
+  test "debe tener puntaje" do 
+    review = Review.new(
+      user: @user,
+      reviewable: @reviewable,
+      content: "Pésimo",
+      score: nil  
+    )
+    assert_not review.valid?
+    assert_includes review.errors[:score], "can't be blank"
+  end
+
+  test "puntaje debe ser un numero" do 
+    review = Review.new(
+      user: @user,
+      reviewable: @reviewable,
+      content: "Pésimo",
+      score: "malaso"  
+    )
+    assert_not review.valid?
+    assert_includes review.errors[:score], "is not a number"
+  end
+
   test "el puntaje debe estar dentro de los rangos permitidos" do 
     review = Review.new(
       user: @user,

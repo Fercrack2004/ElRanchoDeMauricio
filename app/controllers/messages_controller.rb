@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
     if @message.persisted?
       redirect_to [@chatable, @chat_room]
     else
-      flash.now[:alert] = "Mensaje no pudo ser enviado. Por favor inténtalo de nuevo."
+      flash[:alert] = "Mensaje no pudo ser enviado. Por favor inténtalo de nuevo."
       redirect_to [@chatable, @chat_room]
     end
   end

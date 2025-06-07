@@ -11,3 +11,9 @@ two:
   info_type: "{MyString}"
   description: "{MyString}"
   references: "{MyString}"
+
+three:
+  title: "{MyString}"
+  info_type: "{MyString}"
+  description: "{MyString}"
+  references: "{MyString}"

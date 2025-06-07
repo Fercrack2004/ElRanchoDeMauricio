@@ -12,6 +12,7 @@ class InformationTest < ActiveSupport::TestCase
     assert_includes info.errors[:title], "can't be blank"
   end
 
+
     test "no es válido sin info_type" do
     info = Information.new(
       title: "holaquetal",

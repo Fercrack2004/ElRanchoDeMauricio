@@ -14,6 +14,10 @@ class RequestsController < ApplicationController
   def new
     @request = @requestable.requests.new
   end
+
+  def edit
+    head :ok
+  end
     
   def create
     @request = @requestable.requests.new(request_params)

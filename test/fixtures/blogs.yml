@@ -10,3 +10,9 @@ two:
   title: "{MyString}"
   public_type: "{MyString}"
   description: "{MyString}"
+
+three:
+  title: "{MyString}"
+  public_type: "{MyString}"
+  description: "{MyString}"
+
