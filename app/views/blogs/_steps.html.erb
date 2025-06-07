@@ -1,11 +1,24 @@
-<h2 class="text-xl font-bold mt-8 mb-4">Pasos</h2>
-<ol class="space-y-6 list-decimal list-inside">
-  <% blog.steps.order(:step_num).each do |step| %>
-    <li>
-      <div class="mb-2 text-gray-800"><%= step.description %></div>
-      <% if step.image.attached? %>
-        <%= image_tag step.image.variant(resize_to_limit: [300, 300]), class: "rounded-md mt-2" %>
+<%# app/views/blogs/_steps.html.erb %>
+<%# Este parcial se dedica exclusivamente a mostrar la lista de pasos a seguir. %>
+
+<% if blog.steps.any? %>
+  <hr class="my-8">
+  <div>
+    <h2 class="text-3xl font-serif font-bold text-primary-800 mb-6">Pasos a Seguir</h2>
+    <ol class="space-y-8">
+      <% blog.steps.order(:step_num).each_with_index do |step, index| %>
+        <li class="flex items-start gap-4">
+          <div class="flex-shrink-0 bg-primary-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold text-lg">
+            <%= index + 1 %>
+          </div>
+          <div class="flex-grow">
+            <p class="text-gray-800 leading-relaxed"><%= step.description %></p>
+            <% if step.image.attached? %>
+              <%= image_tag step.image.variant(resize_to_limit: [400, 400]), class: "rounded-lg mt-3 shadow-sm" %>
+            <% end %>
+          </div>
+        </li>
       <% end %>
-    </li>
-  <% end %>
-</ol>
+    </ol>
+  </div>
+<% end %>

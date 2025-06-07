@@ -13,4 +13,7 @@ class Information < ApplicationRecord
 
     # validaciones
   validates :title, :info_type, :description, presence: true #las referencias pueden ser vacias
+  def author
+    information_participations.find_by(contribution: :autor)&.user
+  end
 end

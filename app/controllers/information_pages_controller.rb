@@ -6,12 +6,15 @@ class InformationPagesController < ApplicationController
     
   def index
     @search_term = params[:search]
-    @information = if @search_term.present?
-                     Information.where("title LIKE ? OR description LIKE ?", 
-                                       "%#{@search_term}%", "%#{@search_term}%")
-                    else
-                      Information.all
-                    end.order(created_at: :desc)
+
+    # El nombre del modelo debe ser singular: InformationPage
+    base_query = Information.includes(:information_participations, :users)
+
+    @information_pages = if @search_term.present?
+      base_query.where("information_pages.title ILIKE :search OR information_pages.description ILIKE :search", search: "%#{@search_term}%")
+    else
+      base_query
+    end.order(created_at: :desc)
   end
   
   def show
