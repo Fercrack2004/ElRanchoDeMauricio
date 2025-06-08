@@ -33,7 +33,8 @@ class Blog < ApplicationRecord
 
   # --- VALIDACIONES ---
   validates :title, :public_type, :description, presence: true
-  validates :cook_time, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, allow_blank: true }
+  validates :cook_time, presence: true, 
+numericality: { only_integer: true, greater_than_or_equal_to: 1, allow_blank: true }
 
 
   # --- MÉTODOS DE INSTANCIA ---

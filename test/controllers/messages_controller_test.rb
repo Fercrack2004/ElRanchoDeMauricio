@@ -27,7 +27,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
   chat_room = ChatRoom.create!(
     name: "chatroom",
     chatable: blog
-    )
+  )
     sign_in user
     post blog_chat_room_messages_path(blog_id: blog.id, chat_room_id: chat_room.id), params: {
     message: { content: "" }

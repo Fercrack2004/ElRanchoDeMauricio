@@ -14,7 +14,8 @@ class BlogsController < ApplicationController
     # La variable debe ser @blogs (plural) para que la vista pueda iterar sobre ella.
     @blogs = if @search_term.present?
       # Usamos ILIKE para búsquedas que no distinguen mayúsculas/minúsculas y variables de enlace para seguridad.
-      base_query.where("blogs.title ILIKE :search OR blogs.description ILIKE :search", search: "%#{@search_term}%")
+               base_query.where("blogs.title ILIKE :search OR blogs.description ILIKE :search", 
+                                search: "%#{@search_term}%")
     else
       # Si no hay búsqueda, usamos la consulta base sin filtros.
       base_query
@@ -69,9 +70,9 @@ class BlogsController < ApplicationController
   
   def blog_params
     params.require(:blog).permit(:title, :public_type, :description, :cook_time, :card_image,
-    ingredients_attributes: [:id, :name, :quantity, :image, :_destroy],
-    steps_attributes: [:id, :description, :step_num, :image, :_destroy]
-  )
+                                 ingredients_attributes: [:id, :name, :quantity, :image, :_destroy],
+                                 steps_attributes: [:id, :description, :step_num, :image, :_destroy]
+    )
   end
 
   def require_moderator

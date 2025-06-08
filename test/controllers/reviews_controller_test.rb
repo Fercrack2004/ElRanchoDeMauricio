@@ -17,34 +17,34 @@ class ReviewsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-test "show review" do
-  user = users(:one)
-  sign_in user
+  test "show review" do
+    user = users(:one)
+    sign_in user
 
-  information = Information.create!(
-    title: "Test",
-    info_type: "k",
-    description: "Texto"
-  )
-
-
-  InformationParticipation.create!(
-    user: user,
-    information: information,
-    contribution: "autor"  
-  )
+    information = Information.create!(
+      title: "Test",
+      info_type: "k",
+      description: "Texto"
+    )
 
 
-  review = Review.create!(
-    score: 5,
-    content: "ok",
-    user: user,
-    reviewable: information
-  )
+    InformationParticipation.create!(
+      user: user,
+      information: information,
+      contribution: "autor"  
+    )
 
-  get information_review_path(information, review)
-  assert_response :success
-end
+
+    review = Review.create!(
+      score: 5,
+      content: "ok",
+      user: user,
+      reviewable: information
+    )
+
+    get information_review_path(information, review)
+    assert_response :success
+  end
 
 
 

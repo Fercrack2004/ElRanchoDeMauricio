@@ -11,7 +11,9 @@ class InformationPagesController < ApplicationController
     base_query = Information.includes(:information_participations, :users)
 
     @information_pages = if @search_term.present?
-      base_query.where("information_pages.title ILIKE :search OR information_pages.description ILIKE :search", search: "%#{@search_term}%")
+                           base_query.where("information_pages.title ILIKE :search 
+                                            OR information_pages.description ILIKE :search", 
+                                            search: "%#{@search_term}%")
     else
       base_query
     end.order(created_at: :desc)
@@ -34,7 +36,8 @@ class InformationPagesController < ApplicationController
     @information.destroy
     respond_to do |format|
       format.html {
- redirect_to information_pages_url, notice: "Página de informacipon eliminada correctamente.", status: :see_other }
+    redirect_to information_pages_url, notice: "Página de informacipon eliminada correctamente.",
+                                       status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -69,7 +72,7 @@ class InformationPagesController < ApplicationController
   
   def information_params
     params.require(:information).permit(:title, :info_type, :description, :card_image,
-    sections_attributes: [:id, :title, :content, :image, :_destroy]
+                                        sections_attributes: [:id, :title, :content, :image, :_destroy]
     )
   end
 

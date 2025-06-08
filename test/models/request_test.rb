@@ -31,11 +31,11 @@ class RequestTest < ActiveSupport::TestCase
   test "no es valido sin un state valido " do 
     blog = blogs(:one)
     assert_raises ArgumentError do 
-    request = Request.new(
-      user: @user,
-      requestable: blog,
-      state: 3
-    )
+      Request.new(
+        user: @user,
+        requestable: blog,
+        state: 3
+      )
     end
 
   end

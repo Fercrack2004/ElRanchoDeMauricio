@@ -8,7 +8,7 @@ class ChatRoomsControllerTest < ActionDispatch::IntegrationTest
     chat_room = ChatRoom.create!(
   name: "Sala de Chat del Blog",
   chatable: blog
-  )
+)
     get blog_chat_room_path(blog,chat_room)
     assert_response :success
   end
@@ -20,7 +20,7 @@ class ChatRoomsControllerTest < ActionDispatch::IntegrationTest
     chat_room = ChatRoom.create!(
     name: "Sala de Chat del Info",
     chatable: information
-    )
+  )
     get information_chat_room_path(information,chat_room)
     assert_response :success
   end

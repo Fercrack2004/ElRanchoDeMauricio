@@ -22,7 +22,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "delete user" do 
-  admin = users(:one)
+    admin = users(:one)
   admin.role = "admin"
   admin.save!
 

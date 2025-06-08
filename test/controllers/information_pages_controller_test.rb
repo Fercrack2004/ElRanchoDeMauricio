@@ -3,8 +3,8 @@ require "test_helper"
 class InformationPagesControllerTest < ActionDispatch::IntegrationTest
   test "index information" do 
     user = users(:one)
-    information = information(:one)
-    participation = information_participations(:one)
+    information(:one)
+    information_participations(:one)
     sign_in user
 
     get information_pages_url
@@ -14,7 +14,7 @@ class InformationPagesControllerTest < ActionDispatch::IntegrationTest
   test "show information" do 
     user = users(:one)
     information = information(:one)
-    participation = information_participations(:one)
+    information_participations(:one)
     sign_in user
 
     get information_url(information) 
@@ -23,8 +23,8 @@ class InformationPagesControllerTest < ActionDispatch::IntegrationTest
 
   test "new information" do 
     user = users(:one)
-    information = information(:one)
-    participation = information_participations(:one)
+    information(:one)
+    information_participations(:one)
     sign_in user
 
     get new_information_path
@@ -34,7 +34,7 @@ class InformationPagesControllerTest < ActionDispatch::IntegrationTest
   test "edit information" do 
     user = users(:one)
     information = information(:one)
-    participation = information_participations(:one)
+    information_participations(:one)
     sign_in user
 
     get edit_information_path(information)
@@ -44,8 +44,8 @@ class InformationPagesControllerTest < ActionDispatch::IntegrationTest
   test "update information" do 
     user = users(:one)
     information = information(:one)
-    participation = information_participations(:one)
-    chat_room = ChatRoom.create!(
+    information_participations(:one)
+    ChatRoom.create!(
       name: "chatroom",
       chatable: information
     )
@@ -62,8 +62,8 @@ class InformationPagesControllerTest < ActionDispatch::IntegrationTest
 
   test "requiere moderador redirigido" do 
     user = users(:two)
-    information = information(:two)
-    participation = information_participations(:two)
+    information(:two)
+    information_participations(:two)
     sign_in user
     get new_information_path
     assert_redirected_to root_path

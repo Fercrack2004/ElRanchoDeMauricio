@@ -2,14 +2,14 @@ require "test_helper"
 
 class BlogsControllerTest < ActionDispatch::IntegrationTest
   test "index blogs" do 
-    blog = blogs(:one)
+    blogs(:one)
     get blogs_path
     assert_response :success
   end
 
   test "show blog" do  
     user = users(:one)
-    blog = blogs(:one)
+    blogs(:one)
     sign_in user
     get blog_path(user)
     assert_response :success
@@ -17,7 +17,7 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
 
   test "new blog" do 
     user = users(:one)
-    blog = blogs(:one)
+    blogs(:one)
     sign_in user
     get new_blog_path(user)
     assert_response :success
@@ -25,7 +25,7 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
 
   test "edit blog" do 
     user = users(:one)
-    blog = blogs(:one)
+    blogs(:one)
     sign_in user
     get edit_blog_path(user)
     assert_response :success
@@ -34,9 +34,9 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
   test "update blog" do 
     user = users(:one)
     blog = blogs(:one)
-    participation = blog_participations(:one)
+    blog_participations(:one)
     sign_in user
-    chat_room = ChatRoom.create!(
+    ChatRoom.create!(
       name: "chatroom",
       chatable: blog
     )
@@ -52,8 +52,8 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
 
   test "redirigido si no es moderador" do 
     user = users(:two)
-    blog = blogs(:two)
-    participation = blog_participations(:two)
+    blogs(:two)
+    blog_participations(:two)
     sign_in user
     get new_blog_path
     assert_redirected_to root_path
@@ -62,7 +62,7 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
 
   test "requiere editor o autor redirigido" do 
     user = users(:three)
-    blog = blogs(:three)
+    blogs(:three)
     sign_in user
 
     get edit_blog_path(information)

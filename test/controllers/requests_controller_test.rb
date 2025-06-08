@@ -30,7 +30,7 @@ class RequestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "request index information" do
-    user = users(:one)
+      user = users(:one)
 
     sign_in user
 
@@ -38,12 +38,12 @@ class RequestsControllerTest < ActionDispatch::IntegrationTest
     title: "Test",
     info_type: "k",
     description: "Texto"
-    )
+  )
     InformationParticipation.create!(
     user: user,
     information: information,
     contribution: "autor"  
-    )
+  )
 
     get information_requests_path(information.id)
 
