@@ -1,0 +1,14 @@
+<div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-gray-600 mb-8 border-t border-b border-gray-100 py-4">
+  <span class="flex items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1.5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+    Publicado el <%= blog.created_at.strftime("%d/%m/%Y") %>
+  </span>
+  <span class="flex items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1.5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+    <% if blog.cook_time && blog.cook_time > 0 %>
+      <%= blog.cook_time %> min de preparación
+    <% else %>
+      Tiempo no especificado
+    <% end %>
+  </span>
+</div>

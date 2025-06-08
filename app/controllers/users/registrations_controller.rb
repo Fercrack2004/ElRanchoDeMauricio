@@ -84,13 +84,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # Parámetros permitidos para registro
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :phone_number])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :phone_number, :avatar])
   end
 
   # Parámetros permitidos para actualización
   def configure_account_update_params
     devise_parameter_sanitizer.permit(:account_update, 
-                                      keys: [:username, :phone_number, :description])
+                                      keys: [:username, :phone_number, :description, :avatar, :current_password])
   end
 
   # Lógica especial para actualización sin contraseña

@@ -1,38 +1,86 @@
-<h1>Crear un nuevo blog</h1>
+<div class="bg-gray-50 py-12">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
+      
+      <h1 class="text-4xl font-serif font-bold text-primary-800 mb-2">Crear Nueva Receta</h1>
+      <p class="text-gray-600 mb-8">Comparte tus creaciones culinarias con la comunidad.</p>
 
-<%= form_with model: @blog, local: true do |form| %>
-  <% if @blog.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@blog.errors.count, "error") %> impidieron guardar este blog:</h2>
-      <ul>
-        <% @blog.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+      <%= form_with model: @blog, html: { data: { controller: "nested-form" } } do |form| %>
+        <%= render "devise/shared/error_messages", resource: @blog %>
+
+        <%# --- SECCIÓN 1: INFORMACIÓN BÁSICA --- %>
+        <div class="space-y-6">
+          <div>
+            <%= form.label :title, "Título de la Receta", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.text_field :title, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500" %>
+          </div>
+          
+          <div>
+            <%= form.label :card_image, "Imagen de Portada", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.file_field :card_image, class: "w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-200" %>
+          </div>
+
+          <div>
+            <%= form.label :description, "Descripción Corta", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.text_area :description, rows: 4, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500" %>
+          </div>
+
+          <%# --- INICIO: CAMPOS AÑADIDOS DE TIEMPO Y VISIBILIDAD --- %>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            <div>
+              <%= form.label :cook_time, "Tiempo de Cocina (minutos)", class: "block text-gray-700 font-semibold mb-2" %>
+              <%= form.number_field :cook_time, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500" %>
+            </div>
+            <div>
+              <%= form.label :public_type, "Visibilidad", class: "block text-gray-700 font-semibold mb-2" %>
+              <%= form.select :public_type, ["Público", "Privado"], {}, {class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white"} %>
+            </div>
+          </div>
+          <%# --- FIN: CAMPOS AÑADIDOS --- %>
+
+        </div>
+
+        <hr class="my-10">
+
+        <%# --- SECCIÓN 2: INGREDIENTES --- %>
+        <div>
+          <h2 class="text-2xl font-serif font-bold text-primary-800 mb-4">Ingredientes</h2>
+          <div data-nested-form-target="ingredientsContainer">
+            <%= form.fields_for :ingredients do |ingredient_form| %>
+              <%= render 'ingredient_fields', form: ingredient_form %>
+            <% end %>
+          </div>
+          <template data-nested-form-target="ingredientTemplate">
+            <%= form.fields_for :ingredients, Ingredient.new, child_index: 'NEW_RECORD' do |ingredient_form| %>
+              <%= render 'ingredient_fields', form: ingredient_form %>
+            <% end %>
+          </template>
+          <button type="button" data-action="click->nested-form#addIngredient" class="mt-4 bg-secondary-600 hover:bg-secondary-700 text-white px-4 py-2 rounded-lg font-semibold text-sm">Añadir Ingrediente</button>
+        </div>
+        
+        <hr class="my-10">
+
+        <%# --- SECCIÓN 3: PASOS --- %>
+        <div>
+          <h2 class="text-2xl font-serif font-bold text-primary-800 mb-4">Pasos</h2>
+          <div data-nested-form-target="stepsContainer">
+            <%= form.fields_for :steps do |step_form| %>
+              <%= render 'step_fields', form: step_form %>
+            <% end %>
+          </div>
+          <template data-nested-form-target="stepTemplate">
+            <%= form.fields_for :steps, Step.new, child_index: 'NEW_RECORD' do |step_form| %>
+              <%= render 'step_fields', form: step_form %>
+            <% end %>
+          </template>
+          <button type="button" data-action="click->nested-form#addStep" class="mt-4 bg-secondary-600 hover:bg-secondary-700 text-white px-4 py-2 rounded-lg font-semibold text-sm">Añadir Paso</button>
+        </div>
+
+        <%# --- SECCIÓN 4: BOTÓN DE GUARDAR --- %>
+        <div class="mt-12 text-right">
+          <%= form.submit "Crear Receta", class: "bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-all shadow-md hover:shadow-lg cursor-pointer" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
   </div>
-
-  <div>
-    <%= form.label :public_type %><br>
-    <%= form.select :public_type, ["Público", "Privado"] %>
-  </div>
-
-  <div>
-    <%= form.label :description %><br>
-    <%= form.text_area :description %>
-  </div>
-
-  <div>
-    <%= form.label :cook_time %><br>
-    <%= form.text_field :cook_time %>
-  </div>
-
-  <div>
-    <%= form.submit "Crear Blog" %>
-  </div>
-<% end %>
+</div>

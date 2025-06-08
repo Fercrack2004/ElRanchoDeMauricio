@@ -1,33 +1,59 @@
-<h1>Crear nueva información</h1>
+<%# app/views/information_pages/new.html.erb %>
+<div class="bg-gray-50 py-12">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
+      
+      <h1 class="text-4xl font-serif font-bold text-primary-800 mb-2">Crear Página de Información</h1>
+      <p class="text-gray-600 mb-8">Comparte tus conocimientos sobre técnicas, ingredientes o historia culinaria.</p>
 
-<%= form_with model: @information, local: true do |form| %>
-  <% if @information.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@information.errors.count, "error") %> impidieron guardar esta información:</h2>
-      <ul>
-        <% @information.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+      <%= form_with model: @information, html: { data: { controller: "nested-form" } } do |form| %>
+        <%= render "devise/shared/error_messages", resource: @information %>
+
+        <%# --- SECCIÓN 1: INFORMACIÓN BÁSICA --- %>
+        <div class="space-y-6">
+          <div>
+            <%= form.label :title, "Título Principal", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.text_field :title, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500" %>
+          </div>
+
+          <%# --- CAMPO AÑADIDO PARA LA IMAGEN DE PORTADA --- %>
+          <div>
+            <%= form.label :card_image, "Imagen de Portada (para la tarjeta)", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.file_field :card_image, class: "w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-200" %>
+          </div>
+          
+          <div>
+            <%= form.label :description, "Descripción Corta", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.text_area :description, rows: 3, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500", placeholder: "Un resumen de lo que trata esta página..." %>
+          </div>
+          <div>
+            <%= form.label :info_type, "Tipo de Información", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.select :info_type, ["General", "Técnica", "Ingrediente", "Historia"], {}, {class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white"} %>
+          </div>
+        </div>
+
+        <hr class="my-10">
+
+        <%# --- SECCIÓN 2: SECCIONES DE CONTENIDO --- %>
+        <div>
+          <h2 class="text-2xl font-serif font-bold text-primary-800 mb-4">Secciones de Contenido</h2>
+          <div data-nested-form-target="sectionsContainer">
+            <%= form.fields_for :sections do |section_form| %>
+              <%= render 'information_pages/section_fields', form: section_form %>
+            <% end %>
+          </div>
+          <template data-nested-form-target="sectionTemplate">
+            <%= form.fields_for :sections, Section.new, child_index: 'NEW_RECORD' do |section_form| %>
+              <%= render 'information_pages/section_fields', form: section_form %>
+            <% end %>
+          </template>
+          <button type="button" data-action="click->nested-form#addSection" class="mt-4 bg-secondary-600 hover:bg-secondary-700 text-white px-4 py-2 rounded-lg font-semibold text-sm">Añadir Sección</button>
+        </div>
+        
+        <div class="mt-12 text-right">
+          <%= form.submit "Crear Página de Información", class: "bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg text-lg font-semibold" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :title, "Título" %><br>
-    <%= form.text_field :title %>
   </div>
-
-  <div>
-    <%= form.label :info_type, "Tipo de Información" %><br>
-    <%= form.select :info_type, ["General", "Importante", "Privada"] %> <!-- Puedes ajustar estos valores -->
-  </div>
-
-  <div>
-    <%= form.label :description, "Descripción" %><br>
-    <%= form.text_area :description %>
-  </div>
-
-  <div>
-    <%= form.submit "Crear Información" %>
-  </div>
-<% end %>
+</div>

@@ -10,3 +10,17 @@
               data: { confirm: "Seguro de que quieres eliminarlo?" },
               class: "btn btn-danger" %>
 <% end %>
+
+<% if @user.avatar.attached? %>
+  <%= image_tag @user.avatar.variant(resize_to_fill: [150, 150]), class: "rounded-full" %>
+
+  <% if current_user == @user %>
+    <%= link_to 'Cambiar foto', edit_user_registration_path, class: "btn btn-secondary" %>
+  <% end %>
+<% else %>
+  <p>No tienes una foto de perfil.</p>
+
+  <% if current_user == @user %>
+    <%= link_to 'Subir foto', edit_user_path(@user), class: "btn btn-primary" %>
+  <% end %>
+<% end %>

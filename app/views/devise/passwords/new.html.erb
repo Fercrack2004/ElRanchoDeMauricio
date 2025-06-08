@@ -1,16 +1,39 @@
-<h2>Forgot your password?</h2>
+<%# app/views/devise/passwords/new.html.erb %>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<%# Contenedor principal para centrar la tarjeta vertical y horizontalmente %>
+<div class="bg-gray-50 flex flex-col justify-center items-center min-h-screen px-4">
+  
+  <%# Logo que enlaza a la página de inicio %>
+  <div class="mb-8">
+    <a href="/" class="text-2xl font-bold flex items-center">
+      <span class="font-cursive text-3xl text-primary-700">ElRancho</span><span class="font-serif italic text-accent-600">de</span><span class="font-cursive text-3xl text-primary-700">Mauricio</span>
+    </a>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
+  <%# La tarjeta que contiene el formulario %>
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+    
+    <h2 class="text-3xl font-serif font-bold text-primary-800 text-center mb-2">¿Olvidaste tu contraseña?</h2>
+    <p class="text-center text-gray-600 mb-6">No te preocupes. Ingresa tu correo y te enviaremos las instrucciones para recuperarla.</p>
 
-<%= render "devise/shared/links" %>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <%# Campo de Email %>
+      <div class="mb-6">
+        <%= f.label :email, class: "block text-gray-700 font-semibold mb-2" %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500", placeholder: "tu-correo@ejemplo.com" %>
+      </div>
+
+      <%# Botón de Submit %>
+      <div class="actions">
+        <%= f.submit "Enviar instrucciones", class: "w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-4 rounded-lg transition-all shadow-md hover:shadow-lg cursor-pointer" %>
+      </div>
+    <% end %>
+
+    <%# Renderiza los enlaces de "Iniciar Sesión", "Registrarse", etc. %>
+    <div class="mt-6 border-t pt-6">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

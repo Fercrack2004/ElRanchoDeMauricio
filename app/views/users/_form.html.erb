@@ -1,0 +1,6 @@
+<%= form_with(model: @user, local: true, multipart: true) do |form| %>
+  <!-- otros campos -->
+  <%= form.label :avatar, "Foto de perfil" %>
+  <%= form.file_field :avatar %>
+  <%= form.submit %>
+<% end %>

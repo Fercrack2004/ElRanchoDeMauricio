@@ -1,7 +1,7 @@
 class RequestsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_requestable
-  before_action :require_author, only: [:index, :edit, :update]
+  before_action :require_author, only: [:index, :update]
 
   def index
     @requests = @requestable.requests
@@ -81,12 +81,12 @@ class RequestsController < ApplicationController
   end
 
   def require_author
-  participation = case @requestable
-  when Blog
-    @requestable.blog_participations.find_by(user_id: current_user.id)
-  when Information
-    @requestable.information_participations.find_by(user_id: current_user.id)
-  end
+    participation = case @requestable
+    when Blog
+      @requestable.blog_participations.find_by(user_id: current_user.id)
+    when Information
+      @requestable.information_participations.find_by(user_id: current_user.id)
+    end
 
   unless participation&.autor_contribution? ||
          current_user&.admin?

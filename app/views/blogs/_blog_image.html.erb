@@ -1,0 +1,22 @@
+<%# app/views/blogs/_blog_image.html.erb %>
+
+<div class="relative h-72 md:h-96 w-full overflow-hidden">
+  
+  <%# --- LÓGICA DE IMAGEN ACTUALIZADA --- %>
+  <%# Si hay una imagen de portada subida, la mostramos. %>
+  <% if blog.card_image.attached? %>
+    <%# Usamos .variant para pedirle a Cloudinary una versión optimizada de la imagen. %>
+    <%= image_tag blog.card_image.variant(resize_to_fill: [1200, 600]), 
+        alt: blog.title, 
+        class: "w-full h-full object-cover transition-transform duration-500 hover:scale-105" %>
+  <% else %>
+    <%# Si no, mostramos la imagen aleatoria de Unsplash como respaldo. %>
+    <img src="https://source.unsplash.com/random/1200x600/?food,<%= blog.title.parameterize %>" 
+         alt="<%= blog.title %>" 
+         class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" 
+         loading="lazy" />
+  <% end %>
+  <%# --- FIN DE LA LÓGICA DE IMAGEN --- %>
+
+  <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>

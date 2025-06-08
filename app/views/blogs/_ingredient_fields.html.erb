@@ -1,0 +1,33 @@
+<%# app/views/blogs/_ingredient_fields.html.erb %>
+<div class="nested-fields border-t border-gray-200 pt-6 mt-6" data-new-record="<%= form.object.new_record? %>">
+  
+  <div class="grid grid-cols-1 md:grid-cols-6 gap-4 items-start">
+    <div class="md:col-span-3">
+      <%= form.label :name, "Nombre Ingrediente", class: "text-sm font-medium text-gray-700" %>
+      <%= form.text_field :name, class: "w-full mt-1 px-3 py-2 border border-gray-300 rounded-md" %>
+    </div>
+    <div class="md:col-span-2">
+      <%= form.label :quantity, "Cantidad", class: "text-sm font-medium text-gray-700" %>
+      <%= form.text_field :quantity, class: "w-full mt-1 px-3 py-2 border border-gray-300 rounded-md" %>
+    </div>
+    <div class="text-right pt-7">
+      <a href="#" data-action="click->nested-form#remove" class="text-red-500 hover:text-red-700 text-sm font-medium">Eliminar</a>
+    </div>
+  </div>
+
+  <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+    <div>
+      <%= form.label :image, "Cambiar/Añadir Imagen", class: "text-sm font-medium text-gray-700" %>
+      <%= form.file_field :image, class: "w-full mt-1 text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-gray-50 hover:file:bg-gray-200" %>
+    </div>
+    <%# Muestra la imagen actual si existe %>
+    <% if form.object.image.attached? %>
+      <div class="text-center">
+        <p class="text-sm font-medium text-gray-500">Imagen actual:</p>
+        <%= image_tag form.object.image.variant(resize_to_limit: [100, 100]), class: "mt-2 inline-block rounded-md" %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= form.hidden_field :_destroy %>
+</div>

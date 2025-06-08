@@ -1,0 +1,26 @@
+<%# app/views/blogs/_ingredients.html.erb %>
+<%# Este parcial se dedica exclusivamente a mostrar la lista de ingredientes. %>
+
+<% if blog.ingredients.any? %>
+  <hr class="my-8">
+  <div>
+    <h2 class="text-3xl font-serif font-bold text-primary-800 mb-6">Ingredientes</h2>
+    <ul class="space-y-4">
+      <% blog.ingredients.each do |ingredient| %>
+        <li class="flex items-start space-x-4 p-3 bg-gray-50 rounded-lg">
+          <% if ingredient.image.attached? %>
+            <%= image_tag ingredient.image.variant(resize_to_fill: [64, 64]), class: "rounded-md w-16 h-16 object-cover flex-shrink-0" %>
+          <% else %>
+            <div class="w-16 h-16 rounded-md bg-gray-200 flex-shrink-0"></div>
+          <% end %>
+          <div class="flex-grow">
+            <p class="font-semibold text-gray-800"><%= ingredient.name %></p>
+            <% if ingredient.quantity.present? %>
+              <p class="text-gray-600 text-sm">Cantidad: <%= ingredient.quantity %></p>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
