@@ -18,7 +18,11 @@ class InformationPagesController < ApplicationController
   end
   
   def show
-    @information = Information.find(params[:id])
+    @information = Information.includes(
+      :card_image_attachment, # Precarga la imagen de portada
+      sections: :image_attachment, # Precarga las secciones y sus imágenes
+      information_participations: :user # Precarga las participaciones y los usuarios asociados
+    ).find(params[:id])
   end
   
   def new
@@ -64,7 +68,7 @@ class InformationPagesController < ApplicationController
     private
   
   def information_params
-    params.require(:information).permit(:title, :info_type, :description,
+    params.require(:information).permit(:title, :info_type, :description, :card_image,
     sections_attributes: [:id, :title, :content, :image, :_destroy]
     )
   end

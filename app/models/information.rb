@@ -3,7 +3,7 @@ class Information < ApplicationRecord
   has_many :users, through: :information_participations
 
   accepts_nested_attributes_for :information_participations
-  
+  has_one_attached :card_image
   has_many :sections, dependent: :destroy
   accepts_nested_attributes_for :sections, allow_destroy: true, reject_if: :all_blank
 

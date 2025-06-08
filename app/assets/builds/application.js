@@ -8535,11 +8535,15 @@
 
   // app/javascript/controllers/nested_form_controller.js
   var nested_form_controller_default = class extends Controller {
+    // Añadimos los targets para las secciones
     static targets = [
       "ingredientsContainer",
       "ingredientTemplate",
       "stepsContainer",
-      "stepTemplate"
+      "stepTemplate",
+      "sectionsContainer",
+      "sectionTemplate"
+      // <-- NUEVOS TARGETS
     ];
     addIngredient(event) {
       event.preventDefault();
@@ -8550,6 +8554,12 @@
       event.preventDefault();
       let content = this.stepTemplateTarget.innerHTML.replace(/NEW_RECORD/g, (/* @__PURE__ */ new Date()).getTime());
       this.stepsContainerTarget.insertAdjacentHTML("beforeend", content);
+    }
+    // ¡NUEVA FUNCIÓN!
+    addSection(event) {
+      event.preventDefault();
+      let content = this.sectionTemplateTarget.innerHTML.replace(/NEW_RECORD/g, (/* @__PURE__ */ new Date()).getTime());
+      this.sectionsContainerTarget.insertAdjacentHTML("beforeend", content);
     }
     remove(event) {
       event.preventDefault();
