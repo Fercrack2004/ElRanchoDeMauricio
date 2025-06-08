@@ -1,14 +1,38 @@
+<%# app/views/blogs/_blog_metadata.html.erb %>
+<%# Muestra información clave sobre el blog: Autor, Fecha y Tiempo de Cocina. %>
+
 <div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-gray-600 mb-8 border-t border-b border-gray-100 py-4">
+
+  <%# --- SECCIÓN DEL AUTOR (CON ENLACE AL PERFIL) --- %>
+  <% author = @blog.author %>
+  <% if author %>
+    <span class="flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1.5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+      <span>Por:</span>
+      <%= link_to author.username, user_path(author), class: "ml-1 font-semibold text-primary-600 hover:underline" %>
+    </span>
+  <% end %>
+
+  <%# --- SECCIÓN DE FECHA DE PUBLICACIÓN --- %>
   <span class="flex items-center">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1.5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-    Publicado el <%= blog.created_at.strftime("%d/%m/%Y") %>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1.5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+    Publicado el <%= @blog.created_at.strftime("%d/%m/%Y") %>
   </span>
+  
+  <%# --- SECCIÓN DE TIEMPO DE COCINA --- %>
   <span class="flex items-center">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1.5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-    <% if blog.cook_time && blog.cook_time > 0 %>
-      <%= blog.cook_time %> min de preparación
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1.5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <% if @blog.cook_time.present? && @blog.cook_time > 0 %>
+      <%= @blog.cook_time %> min de preparación
     <% else %>
       Tiempo no especificado
     <% end %>
   </span>
+
 </div>

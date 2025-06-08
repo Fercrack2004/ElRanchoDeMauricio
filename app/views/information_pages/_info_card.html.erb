@@ -1,9 +1,10 @@
 <%# app/views/information_pages/_info_card.html.erb %>
 <div class="food-card bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col">
   
-  <%# Imagen Principal con la nueva lógica %>
+  <%# La imagen principal ahora contiene el título y la nueva etiqueta de tipo %>
   <%= link_to information_path(information), class: "block relative overflow-hidden h-56 group" do %>
-    <%# Si hay una imagen de tarjeta, la usamos. Si no, usamos la de Unsplash. %>
+    
+    <%# Lógica para mostrar la imagen de portada o una por defecto %>
     <% if information.card_image.attached? %>
       <%= image_tag information.card_image.variant(resize_to_fill: [600, 400]), class: "food-img w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" %>
     <% else %>
@@ -11,12 +12,21 @@
     <% end %>
 
     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+    <%# --- INICIO: NUEVA ETIQUETA PARA EL TIPO DE INFORMACIÓN --- %>
+    <% if information.info_type.present? %>
+      <div class="absolute top-3 right-3 bg-secondary-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+        <%= information.info_type %>
+      </div>
+    <% end %>
+    <%# --- FIN: NUEVA ETIQUETA --- %>
+
     <div class="absolute bottom-0 left-0 p-4 w-full">
       <h3 class="text-xl font-bold text-white truncate"><%= information.title %></h3>
     </div>
   <% end %>
 
-  <%# Contenido de la Tarjeta %>
+  <%# Contenido de la Tarjeta (sin cambios) %>
   <div class="p-6 flex flex-col flex-grow">
     <p class="text-gray-600 mb-4 line-clamp-3 flex-grow"><%= information.description %></p>
     
@@ -27,4 +37,5 @@
       <% end %>
     </div>
   </div>
+
 </div>

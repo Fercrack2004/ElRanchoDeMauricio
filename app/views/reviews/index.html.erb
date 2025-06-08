@@ -3,7 +3,7 @@
     <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-10 space-y-6">
       
       <h1 class="text-3xl font-serif font-bold text-primary-800 mb-6 text-center">
-        Reviews for <%= @reviewable.class.name %> "<%= @reviewable.try(:title) %>"
+        Reseñas para "<%= @reviewable.try(:title) %>"
       </h1>
 
       <% if @reviews.any? %>
@@ -11,42 +11,24 @@
           <% @reviews.each do |review| %>
             <div class="border border-gray-200 rounded-lg p-6 shadow-sm flex flex-col md:flex-row md:items-start md:space-x-6">
               
-              <!-- Estrellas -->
               <div class="flex-shrink-0 flex items-center space-x-1 mb-4 md:mb-0">
                 <% 5.times do |i| %>
-                  <% if i < review.score.floor %>
-                    <!-- estrella llena -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.973a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.388 2.462a1 1 0 00-.364 1.118l1.287 3.974c.3.92-.755 1.688-1.54 1.118l-3.388-2.462a1 1 0 00-1.176 0l-3.388 2.462c-.784.57-1.838-.197-1.539-1.118l1.287-3.974a1 1 0 00-.364-1.118L2.045 9.4c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.973z"/>
-                    </svg>
-                  <% elsif i < review.score %>
-                    <!-- estrella parcialmente llena para decimales -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                      <defs>
-                        <linearGradient id="half-grad-<%= review.id %>" x1="0" x2="1" y1="0" y2="0">
-                          <stop offset="50%" stop-color="currentColor" />
-                          <stop offset="50%" stop-color="transparent" />
-                        </linearGradient>
-                      </defs>
-                      <path fill="url(#half-grad-<%= review.id %>)" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.973a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.388 2.462a1 1 0 00-.364 1.118l1.287 3.974c.3.92-.755 1.688-1.54 1.118l-3.388-2.462a1 1 0 00-1.176 0l-3.388 2.462c-.784.57-1.838-.197-1.539-1.118l1.287-3.974a1 1 0 00-.364-1.118L2.045 9.4c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.973z"/>
-                    </svg>
+                  <% if i < review.score %>
+                    <svg class="h-6 w-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" ><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.973a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.388 2.462a1 1 0 00-.364 1.118l1.287 3.974c.3.92-.755 1.688-1.54 1.118l-3.388-2.462a1 1 0 00-1.176 0l-3.388 2.462c-.784.57-1.838-.197-1.539-1.118l1.287-3.974a1 1 0 00-.364-1.118L2.045 9.4c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.973z"/></svg>
                   <% else %>
-                    <!-- estrella vacía -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.973a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.388 2.462a1 1 0 00-.364 1.118l1.287 3.974c.3.92-.755 1.688-1.54 1.118l-3.388-2.462a1 1 0 00-1.176 0l-3.388 2.462c-.784.57-1.838-.197-1.539-1.118l1.287-3.974a1 1 0 00-.364-1.118L4.045 9.4c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.973z"/>
-                    </svg>
+                    <svg class="h-6 w-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20" ><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.973a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.388 2.462a1 1 0 00-.364 1.118l1.287 3.974c.3.92-.755 1.688-1.54 1.118l-3.388-2.462a1 1 0 00-1.176 0l-3.388 2.462c-.784.57-1.838-.197-1.539-1.118l1.287-3.974a1 1 0 00-.364-1.118L2.045 9.4c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.973z"/></svg>
                   <% end %>
                 <% end %>
               </div>
 
-              <!-- Datos y comentario -->
               <div class="flex-1">
                 <div class="flex justify-between items-center mb-2">
-                  <p class="font-semibold text-primary-700">
-                    <%= review.user.username %>
-                  </p>
+                  <%# --- LÍNEA MODIFICADA --- %>
+                  <%# Convertimos el nombre de usuario en un enlace a su perfil %>
+                  <%= link_to review.user.username, user_path(review.user), class: "font-semibold text-primary-700 hover:underline" %>
+                  
                   <small class="text-gray-500">
-                    <%= review.created_at.strftime("%b %d, %Y") %>
+                    <%= review.created_at.strftime("%d/%m/%Y") %>
                   </small>
                 </div>
                 <p class="text-gray-800 whitespace-pre-line"><%= review.content %></p>
@@ -56,10 +38,10 @@
           <% end %>
         </div>
       <% else %>
-        <p class="text-center text-gray-600">No reviews yet.</p>
+        <p class="text-center text-gray-600">Aún no hay reseñas. ¡Sé el primero en dejar una!</p>
       <% end %>
 
-      <div class="mb-6 text-center">
+      <div class="mt-8 text-center">
         <%= link_to "Volver", polymorphic_path(@reviewable), class: "inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg text-sm font-semibold shadow-sm" %>
       </div>
 
