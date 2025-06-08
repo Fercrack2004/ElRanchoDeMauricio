@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   resources :subscribers, only: [:create]
   resources :users, only: [:index, :show, :destroy, :edit, :update]
+  patch '/users/:id/update_role', to: 'users#update_role', as: 'update_user_role'
+
 
   resources :blogs do
     resources :reviews

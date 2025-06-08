@@ -24,7 +24,8 @@ La plataforma ofrece una rica gama de funcionalidades que varían según el rol 
 
 -   **Exploración Intuitiva:** Navegación libre por todas las recetas y artículos de información públicos, presentados en un diseño de tarjetas moderno y visual.
 -   **Búsqueda Global:** Un sistema de búsqueda permite a los usuarios encontrar rápidamente contenido específico por título o descripción.
--   **Visualización Detallada:** Cada receta y artículo tiene su propia página de detalle con un diseño profesional, mostrando toda la información relevante, incluyendo imágenes, ingredientes, pasos y secciones.
+-   **Visualización Detallada:** Cada receta y artículo tiene su propia página de detalle con un diseño profesional, mostrando toda la información relevante.
+-   **Perfiles Públicos de Usuario:** Cada usuario tiene una página de perfil pública que muestra su nombre, avatar y descripción. Los nombres de los autores en las recetas y reseñas son enlaces directos a estos perfiles, fomentando la conexión dentro de la comunidad.
 
 ### Para Usuarios Registrados (`user`)
 
@@ -33,33 +34,37 @@ La plataforma ofrece una rica gama de funcionalidades que varían según el rol 
 -   **Solicitudes de Colaboración:** Si un usuario desea contribuir a un blog existente, puede enviar una "Solicitud de Edición" al autor, iniciando un flujo de trabajo colaborativo.
 -   **Suscripción al Newsletter:** Los usuarios pueden suscribirse para recibir notificaciones por correo electrónico, gestionadas a través de la API de **SendGrid**.
 
-### Para Moderadores (`moderator`) y Administradores (`admin`)
+### Para Moderadores (`moderator`)
 
--   **Panel de Creación de Contenido:** Acceden a un menú desplegable "Crear" en la barra de navegación, que les permite iniciar el proceso de creación de nuevos blogs o páginas de información.
--   **Creación de Blogs de Recetas:**
-    -   **Formularios Dinámicos:** Pueden añadir o eliminar campos de **ingredientes** y **pasos** dinámicamente gracias a la integración con StimulusJS.
-    -   **Subida de Imágenes Múltiples:** Pueden subir una **imagen de portada** para la tarjeta del blog, así como **imágenes individuales** para cada ingrediente y cada paso de la receta, ofreciendo una guía visual muy completa.
--   **Creación de Páginas de Información:**
-    -   Pueden construir artículos detallados con múltiples **secciones**, cada una con su propio título, contenido y una imagen opcional.
+-   **Permisos Ampliados:** Los moderadores heredan todos los permisos de un usuario regular.
+-   **Creación de Contenido:** Tienen acceso a un menú desplegable "Crear" para generar nuevos **Blogs de Recetas** y **Páginas de Información**.
+    -   **Formularios Dinámicos:** Utilizan formularios avanzados con StimulusJS para añadir y eliminar campos de **ingredientes, pasos y secciones** dinámicamente.
+    -   **Subida de Imágenes Múltiples:** Pueden subir una **imagen de portada** para cada contenido, así como **imágenes individuales** para cada ingrediente, paso o sección.
 -   **Gestión de Colaboración:** Tienen la capacidad de revisar y aceptar o rechazar las solicitudes de edición enviadas por los usuarios.
--   **Salas de Chat Colaborativas:** Cada blog y página de información tiene asociada una **sala de chat en tiempo real** (utilizando Action Cable de Rails) accesible solo para el autor y los editores (incluyendo moderadores y administradores), permitiéndoles coordinar la creación y edición del contenido de forma privada y eficiente.
+-   **Salas de Chat Colaborativas:** Acceden a salas de chat en tiempo real para coordinar la edición de contenido con los autores.
 
 ### Solo para Administradores (`admin`) - Control Total
 
--   **Superpoderes:** Un administrador tiene todos los permisos de un moderador y un usuario.
--   **Gestión Global de Contenido:** Tienen la autoridad para **editar o eliminar** cualquier blog, página de información, o reseña en toda la plataforma, garantizando el control de calidad y la integridad del sitio.
+Un administrador tiene todos los permisos de un moderador y, adicionalmente, cuenta con un **Panel de Administración** exclusivo con las siguientes capacidades:
+
+-   **Gestión de Usuarios:**
+    -   **Vista de Lista:** Pueden ver una lista completa de todos los usuarios registrados en la plataforma.
+    -   **Cambio de Roles:** Tienen la capacidad de cambiar el rol de cualquier usuario (de `user` a `moderator` o viceversa) directamente desde el panel, a través de un formulario dedicado para cada uno.
+    -   **Eliminación de Usuarios:** Pueden eliminar la cuenta de cualquier usuario (excepto la suya propia, como medida de seguridad).
+-   **Gestión Global de Contenido:** Tienen la autoridad para **editar o eliminar** cualquier blog, página de información, o reseña en toda la plataforma.
+-   **Protección de Cuenta:** Por seguridad, la opción "Cancelar mi cuenta" está deshabilitada en la página de perfil del propio administrador para prevenir la eliminación accidental de la cuenta con los privilegios más altos.
 
 ---
 
 ## Tecnologías y Servicios Clave
 
 -   **Backend:** Ruby on Rails 7
--   **Frontend:** Hotwired (Turbo + StimulusJS) para interactividad moderna.
+-   **Frontend:** Hotwired (Turbo + StimulusJS)
 -   **Estilos:** Tailwind CSS, compilado con `tailwindcss-rails`.
 -   **Autenticación:** Devise.
--   **Almacenamiento de Archivos:** **Cloudinary** se utiliza como el servicio principal para todas las subidas de imágenes.
--   **Envío de Correos:** **SendGrid** gestiona el envío de todos los correos transaccionales.
--   **Deployment:** La aplicación está alojada y servida por **Render**.
+-   **Almacenamiento de Archivos:** **Cloudinary**
+-   **Envío de Correos:** **SendGrid**
+-   **Deployment:** **Render**
 
 ---
 
