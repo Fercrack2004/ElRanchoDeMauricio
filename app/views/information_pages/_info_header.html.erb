@@ -1,0 +1,15 @@
+<%# app/views/information_pages/_info_header.html.erb %>
+<div class="border-b pb-6">
+
+  <%# Mostramos el tipo de información si está presente %>
+  <% if information.info_type.present? %>
+    <p class="font-semibold text-primary-600 mb-2 tracking-wider uppercase">
+      <%= information.info_type %>
+    </p>
+  <% end %>
+  
+  <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900"><%= information.title %></h1>
+  
+  <p class="mt-4 text-lg text-gray-600"><%= information.description %></p>
+
+</div>

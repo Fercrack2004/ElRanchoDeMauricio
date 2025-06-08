@@ -6,16 +6,25 @@ class InformationPagesController < ApplicationController
     
   def index
     @search_term = params[:search]
-    @information = if @search_term.present?
-                     Information.where("title LIKE ? OR description LIKE ?", 
-                                       "%#{@search_term}%", "%#{@search_term}%")
-                    else
-                      Information.all
-                    end.order(created_at: :desc)
+
+    # El nombre del modelo debe ser singular: InformationPage
+    base_query = Information.includes(:information_participations, :users)
+
+    @information_pages = if @search_term.present?
+                           base_query.where("information_pages.title ILIKE :search 
+                                            OR information_pages.description ILIKE :search", 
+                                            search: "%#{@search_term}%")
+    else
+      base_query
+    end.order(created_at: :desc)
   end
   
   def show
-    @information = Information.find(params[:id])
+    @information = Information.includes(
+      :card_image_attachment, # Precarga la imagen de portada
+      sections: :image_attachment, # Precarga las secciones y sus imágenes
+      information_participations: :user # Precarga las participaciones y los usuarios asociados
+    ).find(params[:id])
   end
   
   def new
@@ -27,7 +36,8 @@ class InformationPagesController < ApplicationController
     @information.destroy
     respond_to do |format|
       format.html {
- redirect_to information_pages_url, notice: "Página de informacipon eliminada correctamente.", status: :see_other }
+    redirect_to information_pages_url, notice: "Página de informacipon eliminada correctamente.",
+                                       status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -61,7 +71,9 @@ class InformationPagesController < ApplicationController
     private
   
   def information_params
-    params.require(:information).permit(:title, :info_type, :description)
+    params.require(:information).permit(:title, :info_type, :description, :card_image,
+                                        sections_attributes: [:id, :title, :content, :image, :_destroy]
+    )
   end
 
   def require_moderator

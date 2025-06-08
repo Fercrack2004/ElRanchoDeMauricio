@@ -5,6 +5,7 @@ one:
   content: "{MyString}"
   user: one
 
+
 two:
   score: 1
   content: "{MyString}"

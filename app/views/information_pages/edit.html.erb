@@ -1,25 +1,63 @@
-<h1>Editar Informacion</h1>
+<div class="bg-gray-50 py-12">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
+      
+      <h1 class="text-4xl font-serif font-bold text-primary-800 mb-2">Editar Página de Información</h1>
+      <p class="text-gray-600 mb-8">Realiza los ajustes necesarios a tu página de contenido.</p>
 
-<%= form_with model: @information, local: true do |form| %>
+      <%# Conectamos el formulario al mismo controlador de Stimulus %>
+      <%= form_with model: @information, html: { data: { controller: "nested-form" } } do |form| %>
+        <%= render "devise/shared/error_messages", resource: @information %>
 
-  <div>
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+        <%# --- SECCIÓN 1: INFORMACIÓN BÁSICA --- %>
+        <div class="space-y-6">
+          <div>
+            <%= form.label :title, "Título Principal", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.text_field :title, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500" %>
+          </div>
+          <div>
+            <%= form.label :card_image, "Cambiar Imagen de Portada", class: "block text-gray-700 font-semibold mb-2" %>
+            <% if @information.card_image.attached? %>
+              <div class="flex items-center gap-4 mb-2">
+                <p class="text-sm text-gray-500">Imagen actual:</p>
+                <%= image_tag @information.card_image.variant(resize_to_limit: [100, 100]), class: "rounded-lg" %>
+              </div>
+            <% end %>
+            <%= form.file_field :card_image, class: "w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-200" %>
+          </div>
+          <div>
+            <%= form.label :description, "Descripción Corta", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.text_area :description, rows: 3, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500" %>
+          </div>
+          <div>
+            <%= form.label :info_type, "Tipo de Información", class: "block text-gray-700 font-semibold mb-2" %>
+            <%= form.select :info_type, ["General", "Técnica", "Ingrediente", "Historia"], {}, {class: "w-full px-4 py-2 border border-gray-300 rounded-lg bg-white"} %>
+          </div>
+        </div>
+
+        <hr class="my-10">
+
+        <%# --- SECCIÓN 2: SECCIONES DE CONTENIDO --- %>
+        <div>
+          <h2 class="text-2xl font-serif font-bold text-primary-800 mb-4">Secciones de Contenido</h2>
+          <div data-nested-form-target="sectionsContainer">
+            <%= form.fields_for :sections do |section_form| %>
+              <%= render 'information_pages/section_fields', form: section_form %>
+            <% end %>
+          </div>
+          <template data-nested-form-target="sectionTemplate">
+            <%= form.fields_for :sections, Section.new, child_index: 'NEW_RECORD' do |section_form| %>
+              <%= render 'information_pages/section_fields', form: section_form %>
+            <% end %>
+          </template>
+          <button type="button" data-action="click->nested-form#addSection" class="mt-4 bg-secondary-600 hover:bg-secondary-700 text-white px-4 py-2 rounded-lg font-semibold text-sm">Añadir Sección</button>
+        </div>
+        
+        <div class="mt-12 flex justify-between items-center">
+           <%= link_to "Volver sin guardar", information_path(@information), class: "text-gray-600 hover:text-primary-700" %>
+          <%= form.submit "Guardar Cambios", class: "bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg text-lg font-semibold" %>
+        </div>
+      <% end %>
+    </div>
   </div>
-
-  <div>
-    <%= form.label :info_type %>
-    <%= form.text_area :info_type %>
-  </div>
-
-
-  <div>
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div>
-    <%= form.submit "Actualizar Informacion" %>
-  </div>
-<% end %>
-<%= link_to "Volver", root_path, class: "btn btn-secondary mt-3" %>
+</div>

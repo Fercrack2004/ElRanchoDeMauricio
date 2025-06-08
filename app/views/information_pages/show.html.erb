@@ -1,38 +1,29 @@
-<h1><%= @information.title %></h1>
-<p><%= @information.description %></p>
+<%# app/views/information_pages/show.html.erb %>
+<div class="bg-gray-50 py-8 md:py-12">
+  <main class="container mx-auto px-4">
+    
+    <div class="mb-8">
+      <%= link_to information_pages_path, class: "inline-flex items-center group text-primary-600 hover:text-primary-800" do %>
+        <svg class="h-6 w-6 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+        <span class="text-lg font-medium">Volver a Información</span>
+      <% end %>
+    </div>
 
-<p><%= link_to "Ver Reviews", information_reviews_path(@information), class: "btn btn-outline-secondary", data: { turbo: false } %></p>
-<p><%= link_to "Dejar Review", new_information_review_path(@information), class: "btn btn-primary", data: { turbo: false } %></p>
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+      <%# 1. Imagen de Portada %>
+      <%= render 'information_pages/info_image', information: @information %>
+      
+      <div class="p-6 md:p-10">
+        <%# 2. Título y Descripción %>
+        <%= render 'information_pages/info_header', information: @information %>
+        
+        <%# 3. Contenido Principal (Índice y Secciones) %>
+        <%= render 'information_pages/info_body', information: @information %>
 
-<% participation = @information.information_participations.find_by(user: current_user) %>
-<% if current_user && (participation&.autor_contribution? || current_user.admin? || current_user.moderator?) %>
-<p><%= link_to "Ver Solicitudes", information_requests_path(@information), class: "btn btn-warning", data: { turbo: false } %></p>
-<% end %>
-
-<% if !participation&.autor_contribution? && !participation&.editor_contribution?  %>
-  <p><%= link_to "Solicitar Editar", new_information_request_path(@information), class: "btn btn-warning", data: { turbo: false } %></p>
-<% end %>
-
-<% if participation&.autor_contribution? || participation&.editor_contribution? %>
-<p><%= link_to "Editar Informacion", edit_information_path(@information), data: { turbo: false } %></p>
-<% end %>
-
-<% if @information.chat_room.present? %>
-  <% if participation&.autor_contribution? || participation&.editor_contribution? %>
-    <p><%= link_to "Chatroom Editores", information_chat_room_path(@information, @information.chat_room), data: { turbo: false } %></p>
-    <% end %>
-<% end %>
-
-<% if current_user&.admin? %>
-      <%= button_to "Eliminar Información", information_path(@information), 
-          method: :delete, 
-          form: { 
-            data: { 
-              turbo: "false",  # ← Esto desactiva Turbo para este formulario
-              turbo_confirm: "¿Estás seguro de que quieres eliminar este página de información? Esta acción no se puede deshacer."
-            } 
-          }
-        =%>
-<% end %>
-
-
+        <%# 4. Botones de Acción %>
+        <%= render 'information_pages/info_actions', information: @information %>
+      </div>
+    </div>
+    
+  </main>
+</div>

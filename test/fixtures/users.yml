@@ -17,4 +17,4 @@ three:
   email: admin1@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password123') %>
   phone_number: "9328742942"
-  role: admin
+  role: user

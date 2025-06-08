@@ -3,21 +3,25 @@
 
 <div class="bg-gray-50 py-8 md:py-12">
   <main class="container mx-auto px-4">
-    
+
     <%# Botón para regresar al listado de blogs %>
     <%= render 'blogs/back_button' %>
 
     <%# La tarjeta principal que contiene todo el contenido del blog %>
     <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
       <%= render 'blogs/blog_image', blog: @blog %>
-      
+
       <div class="p-6 md:p-10">
         <%= render 'blogs/blog_header', blog: @blog %>
         <%= render 'blogs/blog_body', blog: @blog %>
+
+        <%= render 'blogs/ingredients', blog: @blog %>
+        <%= render 'blogs/steps', blog: @blog %>
+
         <%= render 'blogs/blog_metadata', blog: @blog %>
         <%= render 'blogs/blog_actions', blog: @blog %>
       </div>
     </div>
-    
+
   </main>
 </div>

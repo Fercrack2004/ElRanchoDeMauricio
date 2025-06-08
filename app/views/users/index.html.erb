@@ -1,2 +1,45 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<div class="bg-gray-50 min-h-screen">
+  <div class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl font-serif font-bold text-primary-800 mb-8">Panel de Administración de Usuarios</h1>
+
+    <div class="bg-white rounded-xl shadow-lg overflow-x-auto">
+      <table class="w-full text-left">
+        <thead class="bg-gray-50 border-b border-gray-200">
+          <tr>
+            <th class="p-4 font-semibold text-gray-600">Usuario</th>
+            <th class="p-4 font-semibold text-gray-600">Email</th>
+            <th class="p-4 font-semibold text-gray-600">Rol Actual</th>
+            <th class="p-4 font-semibold text-gray-600 text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr class="border-b border-gray-100 hover:bg-gray-50">
+              <td class="p-4 flex items-center gap-3">
+                <% if user.avatar.attached? %>
+                  <%= image_tag user.avatar.variant(resize_to_fill: [40, 40]), class: "h-10 w-10 rounded-full object-cover" %>
+                <% else %>
+                  <div class="h-10 w-10 rounded-full bg-gray-200"></div>
+                <% end %>
+                <span class="font-medium text-gray-900"><%= user.username %></span>
+              </td>
+              <td class="p-4 text-gray-600"><%= user.email %></td>
+              <td class="p-4">
+                <%= form_with(model: user, url: update_user_role_path(user), method: :patch, class: "flex items-center gap-2") do |form| %>
+                  <%= form.select :role, User.roles.keys.map { |r| [r.humanize, r] }, { selected: user.role }, { class: "p-2 border border-gray-300 rounded-md bg-white" } %>
+                  <%= form.submit "Cambiar", class: "bg-secondary-600 hover:bg-secondary-700 text-white px-3 py-2 rounded-md font-semibold text-sm cursor-pointer" %>
+                <% end %>
+              </td>
+              <td class="p-4 text-center space-x-2">
+                <%= link_to "Ver Perfil", user_path(user), class: "text-primary-600 hover:underline" %>
+                <% unless user == current_user %>
+                  <%= button_to "Eliminar", user_path(user), method: :delete, form: {data: {turbo_confirm: "CUIDADO: ¿Estás seguro de que quieres eliminar a este usuario? Esta acción es permanente."}}, class: "text-red-600 hover:underline" %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

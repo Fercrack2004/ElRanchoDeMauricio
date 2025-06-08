@@ -1,16 +1,41 @@
-<div class="food-card bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
-  <div class="relative overflow-hidden h-56">
-    <img src="https://source.unsplash.com/random/600x400/?ingredients,<%= information.title.parameterize %>" alt="<%= information.title %>" class="food-img w-full h-full object-cover transition-transform duration-500" />
-    <div class="absolute bottom-0 left-0 p-4 w-full bg-gradient-to-t from-black/70 to-transparent">
-      <h3 class="text-xl font-bold text-white"><%= information.title %></h3>
+<%# app/views/information_pages/_info_card.html.erb %>
+<div class="food-card bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col">
+  
+  <%# La imagen principal ahora contiene el título y la nueva etiqueta de tipo %>
+  <%= link_to information_path(information), class: "block relative overflow-hidden h-56 group" do %>
+    
+    <%# Lógica para mostrar la imagen de portada o una por defecto %>
+    <% if information.card_image.attached? %>
+      <%= image_tag information.card_image.variant(resize_to_fill: [600, 400]), class: "food-img w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" %>
+    <% else %>
+      <img src="https://source.unsplash.com/random/600x400/?library,<%= information.title.parameterize %>" alt="<%= information.title %>" class="food-img w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+    <% end %>
+
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+    <%# --- INICIO: NUEVA ETIQUETA PARA EL TIPO DE INFORMACIÓN --- %>
+    <% if information.info_type.present? %>
+      <div class="absolute top-3 right-3 bg-secondary-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+        <%= information.info_type %>
+      </div>
+    <% end %>
+    <%# --- FIN: NUEVA ETIQUETA --- %>
+
+    <div class="absolute bottom-0 left-0 p-4 w-full">
+      <h3 class="text-xl font-bold text-white truncate"><%= information.title %></h3>
     </div>
-  </div>
-  <div class="p-6">
-    <p class="text-gray-600 mb-4 line-clamp-3"><%= information.description %></p>
-    <div class="flex justify-end items-center">
+  <% end %>
+
+  <%# Contenido de la Tarjeta (sin cambios) %>
+  <div class="p-6 flex flex-col flex-grow">
+    <p class="text-gray-600 mb-4 line-clamp-3 flex-grow"><%= information.description %></p>
+    
+    <div class="flex justify-end items-center mt-auto border-t border-gray-100 pt-4">
       <%= link_to information_path(information), class: "text-primary-600 hover:text-primary-800 font-medium flex items-center group" do %>
-        <span>Leer más</span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        <span>Leer más</span>
+        <svg class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
       <% end %>
     </div>
   </div>
+
 </div>
