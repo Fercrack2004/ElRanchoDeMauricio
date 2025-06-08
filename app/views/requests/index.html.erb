@@ -3,7 +3,11 @@
     <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
 
       <h1 class="text-4xl font-serif font-bold text-primary-800 mb-6 text-center">
+<<<<<<< HEAD
         Solocitudes para <%= @requestable.class.name %> "<%= @requestable.try(:title) %>"
+=======
+        Requests for <%= @requestable.class.name %> "<%= @requestable.try(:title) %>"
+>>>>>>> 93e9223 (views e chats, requests y reviews)
       </h1>
 
       <% if @requests.any? %>
@@ -53,7 +57,7 @@
           <% end %>
 
           <div class="mt-8 text-center">
-            <%= link_to "Volver", root_path, class: "inline-block bg-secondary-600 hover:bg-secondary-700 text-white px-5 py-2 rounded-lg font-semibold text-sm shadow-md hover:shadow-lg" %>
+            <%= link_to "Volver", polymorphic_path(@requestable), class: "bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg text-sm font-semibold shadow-sm" %>
           </div>
         </div>
 

@@ -3,10 +3,10 @@
     <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
 
       <% if @reviewable.nil? %>
-        <p class="text-center text-red-600 font-semibold">Blog no está!</p>
+        <p class="text-center text-red-600 font-semibold">Blog not found!</p>
       <% else %>
-        <h2 class="text-center text-3xl font-serif font-bold text-primary-800 mb-6">
-            Dejar una Review para "<%= @reviewable.title %>"
+        <h2 class="text-center text-2xl font-serif font-bold text-primary-800 mb-6">
+          Dejar una Review para "<%= @reviewable.title %>"
         </h2>
 
         <%= form_with(model: [@reviewable, @review], local: true, html: { class: "space-y-6" }) do |form| %>
@@ -27,6 +27,9 @@
 
       <% end %>
 
+      <div class="mt-4 text-center">
+          <%= link_to "Volver", polymorphic_path([@review.reviewable]), class: "bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg text-sm font-semibold shadow-sm" %>
+        </div>
     </div>
   </div>
 </div>

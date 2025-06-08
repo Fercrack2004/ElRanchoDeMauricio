@@ -24,7 +24,8 @@
 
       <% if @request.pending? %>
         <div class="flex flex-wrap justify-between gap-4 mt-6">
-          <%= link_to "Volver", root_path, class: "bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg text-sm font-semibold shadow-sm" %>
+          <%= link_to "Volver", polymorphic_path([@request.requestable, :requests]), class: "bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg text-sm font-semibold shadow-sm" %>
+
 
           <%= button_to "Aceptar", polymorphic_path([@request.requestable, @request], state: "accepted"), method: :patch,
                         class: "bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-md" %>
@@ -42,7 +43,7 @@
           <% end %>
         </div>
         <div class="mt-4 text-center">
-          <%= link_to "Volver", root_path, class: "bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg text-sm font-semibold shadow-sm" %>
+          <%= link_to "Volver", polymorphic_path([@request.requestable, :requests]), class: "bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg text-sm font-semibold shadow-sm" %>
         </div>
       <% end %>
 
